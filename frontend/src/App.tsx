@@ -1,12 +1,12 @@
-import { useSocket, useSocketEvent } from "./hooks/useSocket";
+import { useSocketEvent } from "./hooks/useSocket";
 
 function App() {
-  const io = useSocket()
-  useSocketEvent('connect', () => console.log('REEEEEEE'))
-  const messageHandler = () => {
-    console.log('Do stuff here :)')
-    io.emit('execute', { messages: null})
-  }
+  // const io = useSocket()
+  useSocketEvent("connect", () => console.log("REEEEEEE"));
+  // const messageHandler = () => {
+  //   console.log('Do stuff here :)')
+  //   io.emit('execute', { messages: null})
+  // }
 
   return (
     <div>

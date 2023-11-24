@@ -10,6 +10,7 @@ services:
     restart: on-failure
     environment:
       - SCHEDULER_URL=http://scheduler:5001
+      - OPENAI_API_KEY
     build:
       context: workers
       dockerfile: demo_worker/Dockerfile

@@ -1,14 +1,5 @@
-import logging
-import sys
-
 from worker_base import ConsoleModelHandler
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s",
-    handlers=[logging.StreamHandler(sys.stdout)],
-)
-
+import sys
 
 def main():
     module_name = sys.argv[1]

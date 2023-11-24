@@ -1,10 +1,16 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { io } from "socket.io-client";
+import App from "./App.tsx";
+import { SocketContext } from "./hooks/useSocket.ts";
+import "./index.css";
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const socket = io("/");
+
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <App />
+    <SocketContext.Provider value={{ io: socket }}>
+      <App />
+    </SocketContext.Provider>
   </React.StrictMode>,
-)
+);

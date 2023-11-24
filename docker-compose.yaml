@@ -4,8 +4,8 @@ services:
       context: scheduler
       dockerfile: Dockerfile
     ports:
-      - 5000
-      - 5001
+      - "5000:5000"
+      - "5001:5001"
   demo_worker:
     restart: on-failure
     environment:

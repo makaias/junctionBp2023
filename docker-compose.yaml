@@ -6,7 +6,10 @@ services:
     ports:
       - 5000
       - 5001
-  # demo_worker:
-  #   build:
-  #     context: workers
-  #     dockerfile: workers/demo_worker/Dockerfile
+  demo_worker:
+    restart: on-failure
+    environment:
+      - SCHEDULER_URL=http://scheduler:5001
+    build:
+      context: workers
+      dockerfile: demo_worker/Dockerfile

@@ -1,0 +1,12 @@
+services:
+  scheduler:
+    build:
+      context: scheduler
+      dockerfile: Dockerfile
+    ports:
+      - 5000
+      - 5001
+  # demo_worker:
+  #   build:
+  #     context: workers
+  #     dockerfile: workers/demo_worker/Dockerfile

@@ -1,18 +1,70 @@
-from queue import Queue
 from uuid import uuid4
 
+import eventlet
 import socketio
+import logging
 from executor import Executor
 from socket_wrapper import SocketWrapper
 
-STATIC_FILES = {
-    "/": "../frontend/build/index.html",
-    "/static": "../frontend/build/static",
-}
 
-taskQueue = Queue()
+class ExecutorService:
+    def __init__(self, executionQueue, port=5001):
+        self.executionQueue = executionQueue
+        self.port = port
+        self.sio = socketio.Server()
+        self.app = socketio.WSGIApp(self.sio)
+        self.executors = {}
 
-executors = {}
+    def __setup_sio(self):
+        sio = self.sio
+        sio.on("connect", self.__sio_connect)
+
+    def __sio_connect(self, sid):
+        executor_sio = SocketWrapper(self.sio, sid)
+        executor_id = str(uuid4())
+        executor = Executor(executor_sio, self.executionQueue)
+        self.executors[executor_id] = executor
+        logging.info("executor connected {executor_id}")
+
+    def __sio_finalize(self, sid, exid):
+        executor = self.get_executor_for_execution(exid)
+        if not executor:
+            logging.error(f"Unable to finalize execution {exid}")
+            return
+
+        executor.finalize(exid)
+
+    def start(self):
+        def start_app(app, port):
+            eventlet.wsgi.server(eventlet.listen(("", port)), app)
+        # Start threads
+        app_thread = eventlet.spawn(start_app, self.app, 5001)
+        scheduler_thread = eventlet.spawn(self.run_scheduler)
+        # Wait for threads to finish
+        app_thread.wait()
+        scheduler_thread.wait()
+
+    def get_available_executor(self):
+        for executor in self.executors.values():
+            if executor.is_available():
+                return executor
+        return None
+
+    def get_executor_for_execution(self, execution):
+        for executor in self.executors.values():
+            if executor.has_execution(execution):
+                return executor
+        return None
+
+    def run_scheduler(self):
+        while True:
+            execution = self.executionQueue.get()
+            executor = self.get_available_executor()
+            while not executor:
+                eventlet.sleep(0.1)
+                executor = self.get_available_executor()
+
+            executor.execute(execution)
 
 
 def routes(sio):
@@ -74,8 +126,3 @@ def request_execution(messages, user_sio):
     }
     taskQueue.put({"execution": execution, "user_sio": user_sio})
     user_sio.emit("execution_created", execution)
-
-
-sio = socketio.Server()
-app = socketio.WSGIApp(sio)
-routes(sio)

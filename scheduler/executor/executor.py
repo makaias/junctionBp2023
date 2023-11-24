@@ -1,16 +1,27 @@
-import eventlet
 import os
 
-# standard Python
+import eventlet
 
 
 class Executor:
-    def __init__(self, sio, taskQueue):
+    def __init__(self, sio, taskQueue, parallelism=1):
         self.executor_sio = sio
         self.taskQueue = taskQueue
-        self.execution = None
+        self.executions = {}
         self.user_sio = None
         self.__stopped = False
+
+    def is_available(self):
+        has_capacity = self.parallelism <= 0 or len(self.executions) < self.parallelism
+        return has_capacity and not self.__stopped
+
+    def has_execution(self, exid):
+        return exid in self.executions
+
+    def execute(self, execution):
+        exid = execution["id"]
+        self.executions[exid] = execution
+        self.executor_sio.emit("execute", execution)
 
     def run(self):
         while True:
@@ -76,7 +87,9 @@ class Executor:
             f.write(asset)
             f.close()
 
-            print(f"Executor({self.executor_sio.sid}) Recieved asset {data[0]}, saved to {filename}")
+            print(
+                f"Executor({self.executor_sio.sid}) Recieved asset {data[0]}, saved to {filename}"
+            )
             self.user_sio.emit(
                 "asset_received",
                 {"id": self.execution["id"], "type": type, "filename": f"{id}.{type}"},

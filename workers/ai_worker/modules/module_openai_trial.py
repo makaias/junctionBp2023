@@ -27,4 +27,6 @@ class AIModule(BaseModule):
 
         logging.info(f"Response returned: {completion.choices[0].message}")
 
+        handler.send_message(completion.choices[0].message)
+
         return completion

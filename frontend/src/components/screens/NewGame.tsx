@@ -18,6 +18,8 @@ export const NewGame = () => {
     actions.startGame(gameType);
   };
 
+  const random =Math.random() > 0.5 
+
   return (
     <div
       className="w-screen h-screen flex justify-center items-center bg-blue-100"
@@ -46,8 +48,9 @@ export const NewGame = () => {
             </div>
             {!selected ? (
               <WheelComponent
-                segments={segments}
-                segColors={segmentColors}
+                segments={random ? segments : segments.reverse()}
+                segColors={random ? segmentColors: segmentColors.reverse()}
+                winningSegment=""
                 onFinished={(winner: any) => onFinished(winner)}
                 primaryColor="#262626"
                 contrastColor="#D4D4D8"

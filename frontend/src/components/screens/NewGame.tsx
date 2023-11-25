@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { segmentColors, segments } from "./newGameConstants";
-import WheelComponent from "react-wheel-of-prizes-react-upgrade";
 import { Modal } from "../modal/Modal";
 import { useAppActions } from "../../game/useAppActions";
 import { isMobile } from "react-device-detect";

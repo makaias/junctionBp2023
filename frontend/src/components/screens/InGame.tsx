@@ -80,16 +80,13 @@ export const InGame = () => {
                   </p>
                 </div>
                 <div className="w-full flex gap-2 justify-end">
+                  <span>Attitude:</span>
+                  <Progress value={appState.game?.health} />
                   {appState.game?.lastTurnDamage !== undefined && (
-                    <div>{`Attitude: ${
-                      appState.game.lastTurnDamage > 0
-                        ? "+"
-                        : appState.game.lastTurnDamage < 0
-                          ? "-"
-                          : ""
+                    <div>{`${
+                      appState.game.lastTurnDamage > 0 ? "+" : ""
                     }${appState.game?.lastTurnDamage}`}</div>
                   )}
-                  <Progress value={appState.game?.health} />
                 </div>
               </div>
             </div>

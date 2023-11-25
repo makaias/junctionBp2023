@@ -18,7 +18,7 @@ export const BetterWheel = (props: any) => {
           overflow: "hidden",
         }}
       >
-        <WheelComponent {...props} size={250} />
+        <WheelComponent {...props} size={275} />
       </div>
     </div>
   );

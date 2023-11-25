@@ -36,7 +36,7 @@ export const Modal = ({ children, callback }: OverlayProps) => {
             </svg>
           </button>
         </div>
-        <div className="p-8 overflow-hidden">{children}</div>
+        <div className="p-8 overflow-scroll">{children}</div>
       </div>
     </div>
   );

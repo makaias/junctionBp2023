@@ -1,13 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { segmentColors, segments } from "./newGameConstants";
 import WheelComponent from "react-wheel-of-prizes-react-upgrade";
 import { Modal } from "../modal/Modal";
 import { useAppActions } from "../../game/useAppActions";
+import { isMobile } from "react-device-detect";
+import { toast } from "react-toastify";
+import { BetterWheel } from "../wheel/BetterWheel";
 
 export const NewGame = () => {
   const [modal, setModal] = useState<boolean>(false);
   const [tutorialModal, setTutorialModal] = useState<boolean>(false);
   const [selected, setSelected] = useState<string | undefined>();
+  const [wheelWidth] = useState(() =>
+    Math.min(400, window.innerWidth * 0.8, window.innerHeight * 0.8),
+  );
 
   const actions = useAppActions();
 
@@ -21,6 +27,14 @@ export const NewGame = () => {
   };
 
   const random = Math.random() > 0.5;
+  const notify = () =>
+    toast("For the best experience please use a bigger screen!");
+  useEffect(() => {
+    if (isMobile) {
+      const id = notify();
+      return () => toast.dismiss(id);
+    }
+  }, []);
 
   return (
     <div
@@ -38,9 +52,7 @@ export const NewGame = () => {
         How to play
       </button>
       <div className="flex flex-col justify-center bg-gradient-to-r from-[#000000E6] to-[#000000CC] text-orange-500 rounded-xl p-4">
-        <h1 className="p-4 mb-10 text-3xl font-bold">
-          GreenHeart Chronicles
-        </h1>
+        <h1 className="p-4 mb-10 text-3xl font-bold">GreenHeart Chronicles</h1>
         <button
           onClick={() => setModal(true)}
           className="p-4 bg-transparent rounded-xl border-2 border-orange-500 text-xl"
@@ -73,13 +85,14 @@ export const NewGame = () => {
       )}
       {modal && (
         <Modal callback={() => setModal(false)}>
-          <div>
+          <div className="flex w-full flex-col items-center justify-start">
             <div className="flex w-full justify-center">
               <h1 className="text-2xl">The challenge:</h1>
             </div>
             {!selected ? (
-              <WheelComponent
+              <BetterWheel
                 segments={random ? segments : segments.reverse()}
+                primaryColoraround="#fff"
                 segColors={random ? segmentColors : segmentColors.reverse()}
                 winningSegment=""
                 onFinished={(winner: any) => onFinished(winner)}
@@ -87,13 +100,13 @@ export const NewGame = () => {
                 contrastColor="#D4D4D8"
                 buttonText="Spin"
                 isOnlyOnce={false}
-                size={250}
+                size={wheelWidth}
                 upDuration={50}
                 downDuration={500}
                 fontFamily="Arial"
               />
             ) : (
-              <div className="w-full pt-20 flex justify-center">
+              <div className="w-full pt-4 flex justify-center">
                 <div className="flex flex-col gap-5 items-center">
                   <h1 className="w-full text-center text-2xl font-bold">
                     {selected}

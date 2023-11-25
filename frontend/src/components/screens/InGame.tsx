@@ -10,9 +10,9 @@ export const InGame = () => {
   const [nextPressed, setNextPressed] = useState<boolean>(false);
 
   const names = {
-  ROBERT: "Robert the Rubber Burner",
-  SARAH: "Sarah the Scatterer"
-  }
+    ROBERT: "Robert the Rubber Burner",
+    SARAH: "Sarah the Scatterer",
+  };
 
   const calculateBackground = () => {
     if (appState.game?.type === "ROBERT") {
@@ -58,9 +58,17 @@ export const InGame = () => {
           <div className="flex w-full flex-col">
             <div className="w-full flex border-gray-700 border-b-2">
               <div className="flex w-full gap-4 bg-gradient-to-r from-[#000000E6] to-[#000000AA] p-4 justify-between rounded-t-xl">
-              <div className='flex gap-4'>
-                <p className="font-semibold">{appState.game?.isUserTurn && nextPressed ? "You" : appState.game ? names[appState.game.type] : ''}</p>
-                <p className="whitespace-nowrap">Rounds left: {appState.game?.turnsLeft}</p>
+                <div className="flex gap-4">
+                  <p className="font-semibold">
+                    {appState.game?.isUserTurn && nextPressed
+                      ? "You"
+                      : appState.game
+                        ? names[appState.game.type]
+                        : ""}
+                  </p>
+                  <p className="whitespace-nowrap">
+                    Rounds left: {appState.game?.turnsLeft}
+                  </p>
                 </div>
                 <Progress value={appState.game?.health} />
               </div>
@@ -74,11 +82,11 @@ export const InGame = () => {
                       maxLength={500}
                       rows={4}
                       onChange={(e) => setCurrentMessage(e.target.value)}
-                      placeholder='Give us your best arguments...'
+                      placeholder="Give us your best arguments..."
                     />
                   </div>
                 ) : (
-                  <div className="overflow-y-scroll flex h-full">
+                  <div className="overflow-y-scroll flex h-full max-h-36">
                     {appState.game?.lastResponse ? (
                       <p>
                         {appState.game?.lastResponse}
@@ -115,20 +123,23 @@ export const InGame = () => {
                         }
                       }}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                        />
-                      </svg>
+                      <div className="flex gap-2 items-center">
+                        <span>Next</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </div>
                     </button>
                   )}
               </div>

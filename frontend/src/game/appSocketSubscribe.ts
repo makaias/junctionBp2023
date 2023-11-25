@@ -9,6 +9,10 @@ export function useAppSocketSubscribe(
 ) {
   useSocketDispatch(dispatch, "connect", { type: "SOCKET_CONNECTED" });
   useSocketDispatch(dispatch, "disconnect", { type: "SOCKET_DISCONNECTED" });
+  useSocketDispatch(dispatch, "text_received", (data) => ({ type: "TEXT_RECEIVED", text: data.text }));
+  useSocketDispatch(dispatch, "send_damage", (data) => ({ type: "DAMAGE_RECEIVED", damage: data.damage }));
+  useSocketDispatch(dispatch, "end_message", { type: "END_MESSAGE_RECEIVED" });
+  // useSocketDispatch(dispatch, "gameCreated", (data) => ({
 
 }
 

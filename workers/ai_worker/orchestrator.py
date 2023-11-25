@@ -17,10 +17,7 @@ class Orchestrator(OrchestratorBase):
             handler=handler
         )
 
-        content = completion.execute()
-
         player = completion.get_player_dict()
-
         handler.add_message(role="assistant", content=player['first_message'])
 
         while handler.game_details()["turns_remaining"] > 0:
@@ -33,7 +30,7 @@ class Orchestrator(OrchestratorBase):
                 break
 
             # Send message to model
-            completion.execute(skip_system_prompt=True)
+            completion.execute()
 
             # Evaluate user response
             evaluation.evaluate()

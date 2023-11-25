@@ -2,6 +2,7 @@ import logging
 from llama_cpp import Llama
 from openai import OpenAI
 from dotenv import load_dotenv
+import copy
 
 from .module_base import BaseModule
 from ..custom_config import *
@@ -40,11 +41,12 @@ class AIModule(BaseModule):
     def execute(self, skip_system_prompt=False):
         if not skip_system_prompt:
             # Insert system prompt at beginnging of messages
-            messages = self.__modelHandler.messages()
+            messages = copy.deepcopy(self.__modelHandler.messages())
             messages.insert(0, self.setup_system_prompt())
 
-        # Send messages to model
-        messages = self.__modelHandler.messages()
+        else:
+            messages = self.__modelHandler.messages()
+
         responseStream = self.__textGenerator(
             model=self.__modelName,
             messages=messages,

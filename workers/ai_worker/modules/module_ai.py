@@ -55,7 +55,8 @@ class AIModule(BaseModule):
             model=self.__modelName,
             messages=messages,
             stream=self.stream,
-            temperature=self.temperature
+            temperature=self.temperature,
+            seed=42,
         )
 
         # Stream response

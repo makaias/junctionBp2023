@@ -88,7 +88,7 @@ export const InGame = () => {
                     />
                   </div>
                 ) : (
-                  <div className="overflow-y-scroll flex h-full">
+                  <div className="overflow-y-scroll flex h-full max-h-36">
                     {appState.game?.lastResponse ? (
                       <p>
                         {appState.game?.lastResponse}
@@ -125,20 +125,23 @@ export const InGame = () => {
                         }
                       }}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                        />
-                      </svg>
+                      <div className="flex gap-2 items-center">
+                        <span>Next</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                          />
+                        </svg>
+                      </div>
                     </button>
                   )}
               </div>

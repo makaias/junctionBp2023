@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-
-  background-image: url("/background.jpg");
-  background-size: cover;
-  box-sizing: border-box;
-  min-height: 100vh;
-}
+/* body { */
+/*   background-image: url("/background.jpg"); */
+/*   background-size: cover; */
+/*   box-sizing: border-box; */
+/*   min-height: 100vh; */
+/* } */

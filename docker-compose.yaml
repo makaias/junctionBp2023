@@ -16,11 +16,21 @@ services:
     ports:
       - "5000:80"
 
-  demo_worker:
+  # demo_worker:
+  #   replicas: 0
+  #   restart: on-failure
+  #   environment:
+  #     - SCHEDULER_URL=http://scheduler:5001
+  #     - OPENAI_API_KEY
+  #   build:
+  #     context: workers
+  #     dockerfile: demo_worker/Dockerfile
+
+  ai_worker:
     restart: on-failure
     environment:
       - SCHEDULER_URL=http://scheduler:5001
       - OPENAI_API_KEY
     build:
       context: workers
-      dockerfile: demo_worker/Dockerfile
+      dockerfile: ai_worker/Dockerfile

@@ -35,8 +35,6 @@ idna==3.5 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:79b8f0ac92d2351be5f6122356c9a592c96d81c9a79e4b488bf2a6a15f88057a
 llama-cpp-python==0.2.19 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:5c3be3f98108b7fc747f5c7260344af13621cd626d628cd5a6c0f6eec53a873a
-logging==0.4.9.6 ; python_version >= "3.11" and python_version < "4.0" \
-    --hash=sha256:26f6b50773f085042d301085bd1bf5d9f3735704db9f37c1ce6d8b85c38f2417
 numpy==1.26.2 ; python_version >= "3.11" and python_version < "4.0" \
     --hash=sha256:06fa1ed84aa60ea6ef9f91ba57b5ed963c3729534e6e54055fc151fad0423f0a \
     --hash=sha256:174a8880739c16c925799c018f3f55b8130c1f7c8e75ab0a6fa9d41cab092fd6 \

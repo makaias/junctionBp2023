@@ -6,7 +6,7 @@ import { SocketContext } from "./hooks/useSocket.ts";
 import "./index.css";
 import { AppBackend } from "./game/AppBackend.tsx";
 
-const socket = io("/");
+const socket = io(import.meta.env.VITE_BACKEND_URL || "/");
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

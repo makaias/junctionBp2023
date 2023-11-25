@@ -1,10 +1,10 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { AppActions, AppState, GameType } from "./types";
 import {
-  useSocket,
-  useSocketEvent as useSocketEventBase,
+  useSocket, useSocketAnyEvent
 } from "../hooks/useSocket";
 import { appReducer } from "./appReducer";
+import { useAppSocketSubscribe } from "./appSocketSubscribe";
 
 type AppBackend = {
   appState: AppState;
@@ -30,22 +30,13 @@ export function AppBackend(props: { children: React.ReactNode }) {
   const socket = useSocket();
   const [appState, dispatch] = React.useReducer(appReducer, initialState);
 
-  useSocketEvent("*", (event: any, data: any) => {
-    console.log("SOCKET EVENT", event, data);
-  }, [])
-
-  useSocketEvent(
-    "connect",
-    () => {
-      dispatch({ type: "SOCKET_CONNECTED" });
-    },
-    [dispatch],
-  );
+  useSocketAnyEvent((...args: any) => console.log("Socket event", ...args));
+  useAppSocketSubscribe(dispatch)
 
   const actions: AppActions = useMemo(
     () => ({
       startGame: (type: GameType) => {
-        socket.emit("EXECUTE", {
+        socket.emit("execute", {
           messages: [],
           details: {
             game_type: type,
@@ -70,7 +61,11 @@ export function AppBackend(props: { children: React.ReactNode }) {
 
   useEffect(() => {
     console.log("App state changed", appState);
-    }, [appState]);
+  }, [appState]);
+
+  useEffect(() => {
+    (window as any).actions = actions;
+  }, [actions]);
 
   return (
     <AppBackendContext.Provider value={ctx}>
@@ -79,10 +74,3 @@ export function AppBackend(props: { children: React.ReactNode }) {
   );
 }
 
-function useSocketEvent(
-  event: string,
-  callback: (...data: any[]) => void,
-  deps: any[],
-) {
-  useSocketEventBase(event, useCallback(callback, deps));
-}

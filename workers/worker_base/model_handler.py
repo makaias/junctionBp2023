@@ -1,4 +1,5 @@
-from typing import Any, List, Optional, Dict, Union
+from typing import List
+
 
 class ModelHandler:
     def __init__(self):
@@ -7,20 +8,17 @@ class ModelHandler:
     def send_text(self, text):
         pass
 
-    def send_asset(self, type: str, asset: Any):
-        pass
-
-    def finalize(self):
+    def end_message(self):
         pass
 
     def messages(self) -> List[str]:
         pass
 
-    def update_status_message(self, status: str) -> None:
+    def game_details(self) -> dict:
         pass
 
-    def update_progress_bar(self, progress: Union[int, None]) -> None:
+    def send_damage(self, damage: int) -> None:
         pass
 
-    def send_debug_thoughts(self, thought: str) -> None:
+    def send_end_game():
         pass

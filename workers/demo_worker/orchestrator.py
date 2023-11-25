@@ -19,6 +19,7 @@ class Orchestrator(OrchestratorBase):
 
         for token in tokens:
             handler.send_text(token + " ")
-            time.sleep(1)
+            time.sleep(.5)
 
-        handler.finalize()
+        handler.send_damage(10)
+        handler.end_message()

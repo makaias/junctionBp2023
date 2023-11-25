@@ -1,7 +1,6 @@
 import logging
 import time
-import uuid
-from typing import Any, List, Union
+from typing import List
 
 from .model_handler import ModelHandler
 
@@ -18,42 +17,24 @@ class SocketModelHandler(ModelHandler):
         logging.info(f"Sending text {exid} {text}")
         self.__sio.emit("send_text", {"id": exid, "text": text})
 
-    def send_asset(self, type: str, asset: Any):
-        id = str(uuid.uuid4())
-        filename = f"{id}.{type}"
-        logging.info(f"Sending {filename} {asset}")
-        self.__sio.emit("send_asset", {"id": id, "type": type, "asset": asset})
-        return f"<asset:{type}:{id}.{type}>"
-
-    def finalize(self):
+    def end_message(self):
         exid = self.__execution["id"]
-        logging.info(f"Finalizing {exid}")
+        logging.info(f"Ending message {exid}")
         time.sleep(0.5)
-        self.__sio.emit("finalize", {"id": self.__execution["id"]})
+        self.__sio.emit("end_message", {"id": self.__execution["id"]})
         self.is_finalized = True
 
     def messages(self) -> List[str]:
         return self.__execution["request"]["messages"]
 
-    def update_status_message(self, status: str) -> None:
-        exid = self.__execution["id"]
-        logging.info(f"Updating status message {exid} {status}")
-        self.__sio.emit(
-            "update_status_message", {"id": self.__execution["id"], "status": status}
-        )
+    def game_details(self) -> dict:
+        return self.__execution["request"]["details"]
 
-    def update_progress_bar(self, progress: Union[int, None]) -> None:
-        exid = self.__execution["id"]
-        logging.info(f"Updating status progress {exid} {progress}")
-        self.__sio.emit(
-            "update_status_progress",
-            {"id": self.__execution["id"], "progress": progress},
-        )
+    def send_damage(self, damage: int) -> None:
+        logging.info(f"Sending damage {damage} for execution {self.__execution['id']}")
+        self.__sio.emit("send_damage", {"id": self.__execution["id"], "damage": damage})
 
-    def send_debug_thoughts(self, thought: str) -> None:
-        exid = self.__execution["id"]
-        logging.info(f"Sending debug thought {exid} {thought}")
-        self.__sio.emit(
-            "send_debug_thought", {"id": self.__execution["id"], "thought": thought}
-        )
-        pass
+    def send_end_game(self):
+        logging.info(f"Sending end game for execution {self.__execution['id']}")
+        self.__sio.emit("send_end_game", {"id": self.__execution["id"]})
+        self.is_finalized = True

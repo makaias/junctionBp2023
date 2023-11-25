@@ -12,17 +12,13 @@ class ConsoleModelHandler(ModelHandler):
         self.__finalized = False
 
     def send_text(self, text):
-        logging.info(f"Frontend message received: |{text}|")
+        exid = self.__execution["id"]
+        logging.info(f"Sending text {exid} {text}")
 
-    def send_asset(self, type, asset) -> str:
-        id = str(uuid.uuid4())
-        filename = f"{id}.{type}"
-        print(f"Sending {filename} {asset}")
-        return f"<asset:{type}:{id}.{type}>"
-
-    def finalize(self):
-        self.__finalized = True
-        print("Final output sent")
+    def end_message(self):
+        exid = self.__execution["id"]
+        logging.info(f"Ending message {exid}")
+        self.is_finalized = True
 
     def messages(self):
         if self.__messages is None:
@@ -30,17 +26,14 @@ class ConsoleModelHandler(ModelHandler):
             self.__messages = [
                 {"role": "user", "content": input("Please type an input prompt: ")}
             ]
-        logging.info(f"Current messages: {self.__messages}")
         return self.__messages
 
-    def update_status_message(self, status: str) -> None:
-        print(status)
-        pass
+    def game_details(self) -> dict:
+        return self.__execution["request"]["details"]
 
-    def update_progress_bar(self, progress: Union[int, None]) -> None:
-        print(progress)
-        pass
+    def send_damage(self, damage: int) -> None:
+        logging.info(f"Sending damage {damage} for execution {self.__execution['id']}")
 
-    def send_debug_thoughts(self, thought: str) -> None:
-        print(thought)
-        pass
+    def send_end_game(self):
+        logging.info(f"Sending end game for execution {self.__execution['id']}")
+        self.is_finalized = True

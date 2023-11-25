@@ -41,7 +41,7 @@ export function AppBackend(props: { children: React.ReactNode }) {
           details: {
             game_type: type,
             hp: 100,
-            turnsRemaining: 10,
+            turns_remaining: 10,
           },
         });
         dispatch({ type: "GAME_CREATED", gameType: type });
@@ -49,9 +49,21 @@ export function AppBackend(props: { children: React.ReactNode }) {
       exitGame: () => {
         dispatch({ type: "EXIT_GAME" });
       },
-      respond: () => {},
+      respond: (text: string) => {
+        if(!appState.game) return
+        if(!appState.game.isUserTurn) return
+        dispatch({ type: "USER_RESPONSE", text });
+        socket.emit("execute", {
+          messages: [...appState.game.messages, { role: "user", content: text }],
+          details: {
+            game_type: appState.game.type,
+            hp: appState.game.health,
+            turns_remaining: appState.game.turnNumber, //TODO calculate this
+          },
+        });  
+      },
     }),
-    [dispatch],
+    [dispatch, appState],
   );
 
   const ctx = {

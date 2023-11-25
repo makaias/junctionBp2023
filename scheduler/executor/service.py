@@ -109,7 +109,7 @@ class ExecutorService:
         execution.progress = None
         execution.status = "finished"
         execution.sio.emit("execution_updated", execution.data())
-        execution.sio.emit("finalize", exid)
+        execution.sio.emit("end_message", exid)
         executor.finalize(exid)
 
     def __get_available_executor(self):

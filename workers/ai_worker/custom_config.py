@@ -13,7 +13,7 @@ You have to act as the following persona: [character]
 
 You have to play hard-to get, so don't let yourself convinced the first couple times, but over time let yourself be convinved to be sustainable.
 
-Start the game by introducing yourself'''
+Start the game by introducing yourself ONCE'''
 
 EVAL_PROMPTS = '''Prompt for AI Evaluation Tool:
 

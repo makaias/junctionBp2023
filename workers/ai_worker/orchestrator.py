@@ -10,7 +10,8 @@ class Orchestrator(OrchestratorBase):
     def execute(self, handler):
         completion = AIModule(
             modelName="gpt-3.5-turbo",
-            handler=handler)
+            handler=handler
+        )
 
         evaluation = EvalModule(
             modelName="gpt-3.5-turbo",
@@ -40,6 +41,7 @@ class Orchestrator(OrchestratorBase):
 
         # Evaluate user response
         score = evaluation.evaluate()
+        handler.send_damage(score)
 
         # Answer done
         handler.end_message()

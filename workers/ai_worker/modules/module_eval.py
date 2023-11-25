@@ -85,11 +85,11 @@ class EvalModule(BaseModule):
         score = ''.join(result)
         logging.info(f"Score generated: {score}")
         # Use regeex to get first number
-        try:
-            score = re.findall(r"[-+]?\d+", score)[0]
-            self.__modelHandler.send_damage(score)
-            return score
+        score_list = re.findall(r"[-+]?\d+", score)
+        # If score_list empty, return 0
+        if len(score_list) == 0:
+            score = 0
+        else:
+            score = int(score_list[0])
 
-        except IndexError:
-            logging.warn(f"Couldn't find number in {score}")
-            return None
+        return score

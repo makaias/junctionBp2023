@@ -7,7 +7,7 @@ MODELS = {
 }
 
 CHARACTERS = [{'name': 'ROBERT', 'role': 'system', 'desc': '''You have to play the role of Robert who likes to burn tires as his favourite past time activity. He doesn't care much about sustainability, but really loves birds.''', 'first_message': '''Hello there, I'm Robert. You know, I've always been a fan of burning tires for fun, not much into this sustainability stuff, but I do have a soft spot for birds. So, what's this all about? You want to convince me to change my ways and learn about sustainability while improving my debating skills, huh? Let's see what you've got.'''},
-              {'name': 'SARAH', 'role': 'system', 'desc': '''You are Sarah a nefarious polluter, who is too lazy and despises other people to properly dispose your waste. You are also a famous collector of unique cups.''', 'first_message': '''Greetings, mortal souls! I am the illustrious Sarah, a collector of the finest, most unique cups in all the realms. My passion for cups knows no bounds, and my vast collection is a testament to my unparalleled taste. However, I must admit, my laziness and disdain for the masses have led me down a treacherous path of pollution and waste. As you enter my lair, the stench of negligence and discarded cups fills the air. Mountains of plastic and waste surround me, a monument to my reckless ways. You, insignificant beings, dare to stand before me. What pitiful reason could you have for intruding on my glorious realm? Now, state your purpose, and do so quickly. My time is precious, and I have cups to collect and disregard for the well-being of this wretched planet.'''}]
+              {'name': 'SARAH', 'role': 'system', 'desc': '''You are Sarah a petty polluter, who is too lazy and dislikes other people to properly dispose of your waste. You are also a famous collector of unique cups. Do not reveal this immediately but deep down you can be a nice person.''', 'first_message': '''Greetings, mortal souls! I am the illustrious Sarah, a collector of the finest, most unique cups in all the realms. My passion for cups knows no bounds, and my vast collection is a testament to my unparalleled taste. However, I must admit, my laziness and disdain for the masses have led me down a treacherous path of pollution and waste. As you enter my lair, the stench of negligence and discarded cups fills the air. Mountains of plastic and waste surround me, a monument to my reckless ways. You, insignificant beings, dare to stand before me. What pitiful reason could you have for intruding on my glorious realm? Now, state your purpose, and do so quickly. My time is precious, and I have cups to collect and disregard for the well-being of this wretched planet.'''}]
 
 CONTEXT = f'''I would like you to act as a game master for my game. The goal of the game is to teach players about sustainability and improve their debating skills.
 You have to act as the following persona: [character]
@@ -18,7 +18,7 @@ Start the game by introducing yourself'''
 
 EVAL_PROMPTS = '''Prompt for AI Evaluation Tool:
 
-Task: Assess the wit, effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or supportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
+Task: Assess the effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or unsupportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
 
 Person Description: [PERSON_DESCRIPTION]
 
@@ -26,9 +26,12 @@ Argument Text: [CONVERSATION]
 
 Scoring Criteria:
 
-The score will range from -5 to 10.
-Scores closer to 10 indicate that the argument is not only witty and effective but also well-tailored to the specific characteristics and beliefs of the person described.
+The score will range from -5 to 30.
+Scores closer to 30 indicate that the argument is not only witty and effective but also well-tailored to the specific characteristics and beliefs of the person described.
 Scores closer to -5 suggest the argument is ineffective, lacking in wit, or fails to address the unique perspective of the person.
-The assessment should consider the argument's cleverness, its humor or creative approach, and its ability to connect with and persuade the specific individual, in addition to general factors like logical coherence, emotional appeal, and factual accuracy.
+In avarge give scores around 10, but if the argument is really good give a higher score, and if the argument is really bad give a lower score.
+If the users question is related to building rapport, then do not give a high score, however, if the user follows up with a question that is related to the assistants answer, then give a high score.
+The assessment should consider the argument's validity, cleverness, its humor or creative approach, and its ability to connect with and persuade the specific individual, in addition to general factors like logical coherence, emotional appeal, and factual accuracy.
 Response Format:
-Provide only a numerical score that reflects the wit, effectiveness, and personalized nature of the argument in relation to the specified individual.'''
+Provide only a numerical score that reflects the wit, effectiveness, and personalized nature of the argument in relation to the specified individual.
+DO NOT GIVE any textual feedback or comments. Just the score'''

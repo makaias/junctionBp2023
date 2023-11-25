@@ -13,7 +13,7 @@ export const EndGame = () => {
         boxSizing: "border-box",
       }}
     >
-      <div className="flex w-full max-w-2xl flex-col justify-center bg-gradient-to-r from-[#000000E6] to-[#000000CC] rounded-xl p-4">
+      <div className="flex w-full max-w-2xl flex-col justify-center bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] backdrop-blur-sm  rounded-xl p-4">
         <h1 className="p-4 mb-10 text-3xl font-bold text-center">
           {appState.game?.gameState === "LOST"
             ? "Better luck next time!"

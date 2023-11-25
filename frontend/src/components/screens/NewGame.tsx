@@ -46,11 +46,11 @@ export const NewGame = () => {
     >
       <button
         onClick={() => setTutorialModal(true)}
-        className="bg-black border-orange-500 border-2 rounded-xl mb-4 p-4 text-orange-500 px-8 text-xl"
+        className="border-orange-500 border-2 rounded-xl mb-4 p-4 text-orange-500 px-8 text-xl  bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] backdrop-blur-sm"
       >
         How to play
       </button>
-      <div className="flex flex-col justify-center bg-gradient-to-r from-[#000000E6] to-[#000000CC] text-orange-500 rounded-xl p-4">
+      <div className="flex flex-col justify-center bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] backdrop-blur-sm text-orange-500 rounded-xl p-4">
         <h1 className="p-4 mb-10 text-3xl font-bold">GreenHeart Chronicles</h1>
         <button
           onClick={() => setModal(true)}

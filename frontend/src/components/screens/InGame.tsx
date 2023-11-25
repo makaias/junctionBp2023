@@ -64,7 +64,7 @@ export const InGame = () => {
           />
         </div>
         {/* <!-- Bottom panel --> */}
-        <div className="flex flex-1 w-full flex-col  max-h-[45vh] bg-gradient-to-r from-[#000000E6] to-[#000000AA] rounded-xl">
+        <div className="flex flex-1 w-full flex-col  max-h-[45vh] bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] backdrop-blur-sm rounded-xl">
           <div className="w-full flex border-gray-700 border-b-2 p-4">
             <div className="flex w-full gap-4  justify-between">
               <div className="flex gap-4">

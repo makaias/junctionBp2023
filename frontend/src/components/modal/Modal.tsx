@@ -12,7 +12,7 @@ export const Modal = ({ children, callback }: OverlayProps) => {
       onClick={() => callback()}
     >
       <div
-        className="w-full relative max-w-2xl h-[80%] bg-black p-4 text-orange-500 flex flex-col gap-4 rounded-xl overflow-hidden"
+        className="w-full relative max-w-2xl h-[80%] bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] p-4 text-orange-500 flex flex-col gap-4 rounded-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <button

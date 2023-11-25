@@ -25,10 +25,10 @@ class SocketModelHandler(ModelHandler):
         self.is_finalized = True
 
     def messages(self) -> List[str]:
-        return self.__execution["request"]["messages"]
+        return self.__execution["messages"]
 
     def game_details(self) -> dict:
-        return self.__execution["request"]["details"]
+        return self.__execution["details"]
 
     def send_damage(self, damage: int) -> None:
         logging.info(f"Sending damage {damage} for execution {self.__execution['id']}")

@@ -72,6 +72,15 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
           }],
         },
       };
+    case "END_GAME":
+      return {
+        ...state,
+        game: state.game && {
+          ...state.game,
+          gameState: state.game.health <= 0 ? "WON" : "LOST",
+          isUserTurn: false,
+        },
+      };
     default:
       console.warn("Unhandled reducer event", action);
       return state;
@@ -118,6 +127,11 @@ type SocketEndMessageReceivedMessage = ReducerMessageBase & {
   type: "END_MESSAGE_RECEIVED";
 };
 
+type SocketEndGameMessage = ReducerMessageBase & {
+  type: "END_GAME";
+};
+
+
 export type ReducerMessage =
   | GameCreatedMessage
   | ExitGameMessage
@@ -126,4 +140,5 @@ export type ReducerMessage =
   | SocketTextReceivedMessage
   | SocketDamageReceivedMessage
   | SocketEndMessageReceivedMessage
-  | UserResponseMessage;
+  | UserResponseMessage
+  | SocketEndGameMessage;

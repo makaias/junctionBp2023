@@ -11,7 +11,7 @@ export type GameState = {
   health: number
   lastResponse: string
   messages: Message[]
-  turnNumber: number
+  turnsLeft: number
 }
 
 export type Message = {

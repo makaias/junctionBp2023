@@ -15,11 +15,22 @@ class Orchestrator(OrchestratorBase):
         )
 
     def execute(self, handler):
-        tokens = DEMO_TEXT.split(" ")
+        if handler.game_details()["hp"] <= 0:
+            handler.send_text("Congratulations! You won!")
+            handler.send_end_game()
+            handler.end_message()
+            return
 
+        if handler.game_details()["turns_remaining"] <= 0:
+            handler.send_text("You ran out of turns!")
+            handler.send_end_game()
+            handler.end_message()
+            return
+
+        tokens = DEMO_TEXT.split(" ")
         for token in tokens:
             handler.send_text(token + " ")
             time.sleep(.1)
 
-        handler.send_damage(10)
+        handler.send_damage(34)
         handler.end_message()

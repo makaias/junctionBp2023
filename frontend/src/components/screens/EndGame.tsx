@@ -6,7 +6,7 @@ export const EndGame = () => {
   const appState = useAppState();
   return (
     <div
-      className="w-screen h-screen flex justify-center items-center text-orange-500"
+      className="text-xl w-screen h-screen flex justify-center items-center text-orange-500"
       style={{
         backgroundImage: 'url("/endgame_background.jpg")',
         backgroundSize: "cover",

@@ -48,7 +48,7 @@ export const InGame = () => {
 
   return (
     <div
-      className="w-screen h-screen flex justify-center items-end p-4 text-orange-500 text-xl"
+      className="w-screen h-screen flex justify-center items-end p-4 text-orange-500 text-2xl"
       style={{
         backgroundImage: calculateBackground(),
         backgroundSize: "cover",
@@ -82,7 +82,7 @@ export const InGame = () => {
                 <Progress value={appState.game?.health} />
               </div>
             </div>
-            <div className="w-full flex flex-col max-w-5xl bg-gradient-to-r from-[#000000E6] to-[#000000AA]  p-4 h-60 rounded-b-xl">
+            <div className="w-full flex flex-col max-w-5xl bg-gradient-to-r from-[#000000E6] to-[#000000AA]  p-4 h-72 rounded-b-xl">
               <div className="w-full h-full space-between">
                 {appState.game?.isUserTurn && nextPressed ? (
                   <div>
@@ -107,7 +107,7 @@ export const InGame = () => {
                     />
                   </div>
                 ) : (
-                  <div className="overflow-y-scroll flex h-full max-h-36">
+                  <div className="overflow-y-scroll flex h-full max-h-52 p-4">
                     {appState.game?.lastResponse ? (
                       <p>
                         {appState.game?.lastResponse}

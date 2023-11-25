@@ -9,6 +9,11 @@ export const InGame = () => {
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [nextPressed, setNextPressed] = useState<boolean>(false);
 
+  const names = {
+  ROBERT: "Robert the Rubber Burner",
+  SARAH: "Sarah the Scatterer"
+  }
+
   const calculateBackground = () => {
     if (appState.game?.type === "ROBERT") {
       if (appState.game?.health < 33) {
@@ -34,7 +39,7 @@ export const InGame = () => {
 
   return (
     <div
-      className="w-screen h-screen flex justify-center items-end p-4"
+      className="w-screen h-screen flex justify-center items-end p-4 text-orange-500 text-xl"
       style={{
         backgroundImage: calculateBackground(),
         backgroundSize: "cover",
@@ -46,27 +51,30 @@ export const InGame = () => {
           <img
             className=""
             src={appState.game?.type === "SARAH" ? "/sarah.png" : "/robert.png"}
-            alt=""
+            alt="image"
           />
         </div>
         <div className="flex w-full gap-4">
           <div className="flex w-full flex-col">
-            <div className="w-full flex border-white border-b-2">
-              <div className="flex w-full gap-4 bg-gray-200 p-4 opacity-90">
-                <p>Name</p>
-                <p className="whitespace-nowrap">Rounds left: 8</p>
+            <div className="w-full flex border-gray-700 border-b-2">
+              <div className="flex w-full gap-4 bg-gradient-to-r from-[#000000E6] to-[#000000AA] p-4 justify-between rounded-t-xl">
+              <div className='flex gap-4'>
+                <p className="font-semibold">{appState.game?.isUserTurn && nextPressed ? "You" : appState.game ? names[appState.game.type] : ''}</p>
+                <p className="whitespace-nowrap">Rounds left: {appState.game?.turnsLeft}</p>
+                </div>
                 <Progress value={appState.game?.health} />
               </div>
             </div>
-            <div className="w-full flex flex-col max-w-5xl bg-gray-200 p-4 opacity-90 h-40">
+            <div className="w-full flex flex-col max-w-5xl bg-gradient-to-r from-[#000000E6] to-[#000000AA]  p-4 h-60 rounded-b-xl">
               <div className="w-full h-full space-between">
                 {appState.game?.isUserTurn && nextPressed ? (
                   <div>
                     <textarea
-                      className="resize-none flex-1 w-full h-full"
+                      className="resize-none flex-1 w-full h-full bg-gray-700"
                       maxLength={500}
                       rows={4}
                       onChange={(e) => setCurrentMessage(e.target.value)}
+                      placeholder='Give us your best arguments...'
                     />
                   </div>
                 ) : (

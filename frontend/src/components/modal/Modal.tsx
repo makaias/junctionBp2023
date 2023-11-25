@@ -12,7 +12,7 @@ export const Modal = ({ children, callback }: OverlayProps) => {
       onClick={() => callback()}
     >
       <div
-        className="w-full max-w-2xl h-[80%] bg-blue-200 flex flex-col gap-4 rounded-xl overflow-hidden"
+        className="w-full max-w-2xl h-[80%] bg-black text-orange-500 flex flex-col gap-4 rounded-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bg-secondary-300 flex w-full p-4 justify-end">

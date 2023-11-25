@@ -40,6 +40,7 @@ class Orchestrator(OrchestratorBase):
 
         # Evaluate user response
         score = evaluation.evaluate()
+        handler.send_damage(score)
 
         # Answer done
         handler.end_message()

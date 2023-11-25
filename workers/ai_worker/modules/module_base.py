@@ -10,7 +10,7 @@ class BaseModule:
 
 # "details": {"game_type": "ROBERT","hp": 100}
     def setup_eval_prompt(self):
-        player_dict = self.__get_player_dict()
+        player_dict = self.get_player_dict()
 
         eval_prompt = EVAL_PROMPTS.replace(
             '[PERSON_DESCRIPTION]', player_dict['desc'])
@@ -21,11 +21,11 @@ class BaseModule:
         return {'role': 'system', 'content': eval_prompt}
 
     def setup_system_prompt(self):
-        player_dict = self.__get_player_dict()
+        player_dict = self.get_player_dict()
 
         return {'role': 'system', 'content': CONTEXT.replace('[character]', player_dict['desc'])}
 
-    def __get_player_dict(self):
+    def get_player_dict(self):
         player_name = self.__modelHandler.game_details()['game_type']
 
         player_dict = [

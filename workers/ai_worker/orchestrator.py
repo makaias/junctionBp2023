@@ -10,7 +10,8 @@ class Orchestrator(OrchestratorBase):
     def execute(self, handler):
         completion = AIModule(
             modelName="gpt-3.5-turbo",
-            handler=handler)
+            handler=handler
+        )
 
         evaluation = EvalModule(
             modelName="gpt-3.5-turbo",

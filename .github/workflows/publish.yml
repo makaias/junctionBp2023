@@ -36,3 +36,10 @@ jobs:
           DOCKER_IMAGE=nexus.thor.akromentos.com/junctionbp2023-scheduler:$DOCKER_TAG
           docker build -t $DOCKER_IMAGE scheduler
           docker push $DOCKER_IMAGE
+
+      - name: Build and push ai-worker image
+        run: |
+          DOCKER_TAG=$(echo ${{ github.ref }} | sed 's/^refs\/tags\/v//')
+          DOCKER_IMAGE=nexus.thor.akromentos.com/junctionbp2023-ai-worker:$DOCKER_TAG
+          docker build -t $DOCKER_IMAGE -f ai_worker/Dockerfile workers
+          docker push $DOCKER_IMAGE

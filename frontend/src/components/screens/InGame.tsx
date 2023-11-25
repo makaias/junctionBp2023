@@ -10,27 +10,29 @@ export const InGame = () => {
   const [nextPressed, setNextPressed] = useState<boolean>(false);
 
   const names = {
-  ROBERT: "Robert the Rubber Burner",
-  SARAH: "Sarah the Scatterer"
-  }
+    ROBERT: "Robert the Rubber Burner",
+    SARAH: "Sarah the Scatterer",
+  };
 
   const calculateBackground = () => {
     if (appState.game?.type === "ROBERT") {
-      if (appState.game?.health < 33) {
+      if (appState.game.health < 33) {
         return 'url("/robert_bg_3.png")';
       }
-      if (appState.game?.health < 66) {
+      if (appState.game.health < 66) {
         return 'url("/robert_bg_2.png")';
       }
       return 'url("/robert_bg_1.png")';
     }
-    if (appState.game?.health && appState.game.health < 33) {
-      return 'url("/sarah_bg_3.png")';
+    if (appState.game?.type === "SARAH") {
+      if (appState.game.health < 33) {
+        return 'url("/sarah_bg_3.png")';
+      }
+      if (appState.game.health < 66) {
+        return 'url("/sarah_bg_2.png")';
+      }
+      return 'url("/sarah_bg_1.png")';
     }
-    if (appState.game?.health && appState.game.health < 66) {
-      return 'url("/sarah_bg_2.png")';
-    }
-    return 'url("/sarah_bg_1.png")';
   };
 
   const exitGame = () => {
@@ -58,9 +60,17 @@ export const InGame = () => {
           <div className="flex w-full flex-col">
             <div className="w-full flex border-gray-700 border-b-2">
               <div className="flex w-full gap-4 bg-gradient-to-r from-[#000000E6] to-[#000000AA] p-4 justify-between rounded-t-xl">
-              <div className='flex gap-4'>
-                <p className="font-semibold">{appState.game?.isUserTurn && nextPressed ? "You" : appState.game ? names[appState.game.type] : ''}</p>
-                <p className="whitespace-nowrap">Rounds left: {appState.game?.turnsLeft}</p>
+                <div className="flex gap-4">
+                  <p className="font-semibold">
+                    {appState.game?.isUserTurn && nextPressed
+                      ? "You"
+                      : appState.game
+                        ? names[appState.game.type]
+                        : ""}
+                  </p>
+                  <p className="whitespace-nowrap">
+                    Rounds left: {appState.game?.turnsLeft}
+                  </p>
                 </div>
                 <Progress value={appState.game?.health} />
               </div>
@@ -74,7 +84,7 @@ export const InGame = () => {
                       maxLength={500}
                       rows={4}
                       onChange={(e) => setCurrentMessage(e.target.value)}
-                      placeholder='Give us your best arguments...'
+                      placeholder="Give us your best arguments..."
                     />
                   </div>
                 ) : (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Progress } from "../progress/Progress";
 import { useAppActions } from "../../game/useAppActions";
 import useAppState from "../../game/useAppState";
@@ -8,6 +8,13 @@ export const InGame = () => {
   const appState = useAppState();
   const [currentMessage, setCurrentMessage] = useState<string>("");
   const [nextPressed, setNextPressed] = useState<boolean>(false);
+
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      setTimeout(() => inputRef.current?.focus());
+    }
+  }, [nextPressed]);
 
   const names = {
     ROBERT: "Robert the Rubber Burner",
@@ -80,11 +87,23 @@ export const InGame = () => {
                 {appState.game?.isUserTurn && nextPressed ? (
                   <div>
                     <textarea
+                      ref={inputRef}
                       className="resize-none flex-1 w-full h-full bg-gray-700"
                       maxLength={500}
                       rows={4}
                       onChange={(e) => setCurrentMessage(e.target.value)}
                       placeholder="Give us your best arguments..."
+                      onKeyDown={(e) => {
+                        if (
+                          e.code === "Enter" &&
+                          currentMessage.length > 0 &&
+                          nextPressed
+                        ) {
+                          actions.respond(currentMessage);
+                          setCurrentMessage("");
+                          setNextPressed(false);
+                        }
+                      }}
                     />
                   </div>
                 ) : (

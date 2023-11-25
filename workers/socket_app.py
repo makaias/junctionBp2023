@@ -45,7 +45,8 @@ def execute(data):
         handler.finalize()
     finally:
         if not handler.is_finalized:
-            handler.finalize()
+            handler.send_text("\n\n <Execution error occured, please try again later>")
+            handler.end_message()
 
 
 @sio.event

@@ -12,26 +12,20 @@ CHARACTERS = [{'name': 'ROBERT', 'role': 'system', 'desc': '''You have to play t
 CONTEXT = f'''I would like you to act as a game master for my game. The goal of the game is to teach players about sustainability and improve their debating skills.
 You have to act as the following persona: [character]
 
-You have to play hard-to get, so don't let yourself convinced the first couple times, but over time let yourself be convinved to be sustainable.
+You have to play hard to get, so don't let yourself be convinced the first couple of times, but over time let yourself be convinced to be sustainable.
+In your answer consider the given overall attitude which is a number from 0 to 100. 100 means that you should be fully convinced, while 0 represents no interest.
+You should also consider the last attitude change, and if its large then give a more positive, but not fully convinced if it low, then a sceptical answer.
+
+DO NOT OUTPUT ANYTHING RELATED TO THE ATTITUDE
 
 Start the game by introducing yourself'''
 
-EVAL_PROMPTS = '''Prompt for AI Evaluation Tool:
-
-Task: Assess the effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or unsupportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
+# Prompt for AI Evaluation Tool:
+EVAL_PROMPTS = '''Assess the effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or unsupportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
 
 Person Description: [PERSON_DESCRIPTION]
 
-Argument Text: [CONVERSATION]
+For each argument give a score between -5 and 30
+ONLY OUTPUT THE SCORE WITH NO OTHER TEXT
 
-Scoring Criteria:
-
-The score will range from -5 to 30.
-Scores closer to 30 indicate that the argument is not only witty and effective but also well-tailored to the specific characteristics and beliefs of the person described.
-Scores closer to -5 suggest the argument is ineffective, lacking in wit, or fails to address the unique perspective of the person.
-In avarge give scores around 10, but if the argument is really good give a higher score, and if the argument is really bad give a lower score.
-If the users question is related to building rapport, then do not give a high score, however, if the user follows up with a question that is related to the assistants answer, then give a high score.
-The assessment should consider the argument's validity, cleverness, its humor or creative approach, and its ability to connect with and persuade the specific individual, in addition to general factors like logical coherence, emotional appeal, and factual accuracy.
-Response Format:
-Provide only a numerical score that reflects the wit, effectiveness, and personalized nature of the argument in relation to the specified individual.
-DO NOT GIVE any textual feedback or comments. Just the score'''
+Example output: 10'''

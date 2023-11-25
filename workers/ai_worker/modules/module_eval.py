@@ -18,7 +18,7 @@ class EvalModule(BaseModule):
         self.stream = True
         self.temperature = 0.75
         self.__modelHandler = handler
-        self.__maxTokens = 5
+        self.__maxTokens = 20
 
         # Set up OpenAI API
         if self.__modelName in OPENAI_MODELS:
@@ -45,17 +45,24 @@ class EvalModule(BaseModule):
             # Insert system prompt at beginnging of messages
             messages = copy.deepcopy(self.__modelHandler.messages())
             messages.insert(0, self.setup_eval_prompt())
+            messages.insert(1, {"role": "user", "content": "Littering is bad"})
+            messages.insert(2, {"role": "assistant", "content": "5"})
 
         else:
             messages = self.__modelHandler.messages()
 
-        # Send messages to model4
+        # Send messages to model
+        logging.info(f"Sending messages to evaluate model: {messages}")
+
+        custom_messages = copy.deepcopy(list(messages))
+        custom_messages = custom_messages[0:3]+[custom_messages[-1]]
         responseStream = self.__textGenerator(
             model=self.__modelName,
-            messages=messages,
+            messages=custom_messages,
             stream=self.stream,
             temperature=self.temperature,
-            max_tokens=self.__maxTokens
+            max_tokens=self.__maxTokens,
+            seed=42,
         )
 
         # Stream response

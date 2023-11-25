@@ -38,7 +38,7 @@ class AIModule(BaseModule):
             raise ValueError(
                 f"Model name {self.__modelName} is not supported yet.")
 
-    def execute(self, skip_system_prompt=False):
+    def execute(self, skip_system_prompt=False, score=0):
         if not skip_system_prompt:
             # Insert system prompt at beginnging of messages
             messages = copy.deepcopy(self.__modelHandler.messages())
@@ -47,11 +47,16 @@ class AIModule(BaseModule):
         else:
             messages = self.__modelHandler.messages()
 
+        attitude = self.__modelHandler.game_details()["hp"] + score
+        messages[-1]["content"] += f'''\nAttitude:
+        {attitude}\nAttitude change: {score}'''
+
         responseStream = self.__textGenerator(
             model=self.__modelName,
             messages=messages,
             stream=self.stream,
-            temperature=self.temperature
+            temperature=self.temperature,
+            seed=42,
         )
 
         # Stream response

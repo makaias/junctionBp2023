@@ -1,7 +1,7 @@
 from .module_base import BaseModule
 import logging
 from llama_cpp import Llama
-import custom_config as cfg
+from ..custom_config import models as cfg_models
 
 PROMPT = [
     {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."}
@@ -17,12 +17,14 @@ class LocalAIModule(BaseModule):
         self.context = 4096
         self.temperature = 0.5
         self.top_p = 50
-        self.n_gpu_layers = 40
+        self.n_gpu_layers = 128
         self.n_batch = 4
         self.modelName = modelName
         self.stream = True
         self.__model = Llama(
-            model_path=cfg.models[modelName], n_gpu_layers=128, n_ctx=self.maxOutputTokens)
+            model_path=cfg_models[modelName],
+            n_gpu_layers=self.n_gpu_layers,
+            n_ctx=self.context)
 
         logging.info(f"Initialized model {modelName}")
 
@@ -31,7 +33,7 @@ class LocalAIModule(BaseModule):
         self.__modelHandler = handler
         messages = self.__modelHandler.messages()
         PROMPT.append(messages)
-        logging.info(f"Feeding model {self._modelName} input prompt: {PROMPT}")
+        logging.info(f"Feeding model {self.modelName} input prompt: {PROMPT}")
 
         # Generate response
         responseStream = self.__model.create_chat_completion(

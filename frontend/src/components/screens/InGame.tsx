@@ -4,16 +4,16 @@ import { useAppActions } from "../../game/useAppActions";
 import useAppState from "../../game/useAppState";
 
 export const InGame = () => {
-  const [userTurn, setUserTurn] = useState<boolean>(false);
   const actions = useAppActions();
   const appState = useAppState();
+  const [currentMessage, setCurrentMessage] = useState<string>("");
 
   const calculateBackground = () => {
-    if (appState.game?.type === 'ROBERT') {
-      return 'url("/robert_bg_1.jpg")'
+    if (appState.game?.type === "ROBERT") {
+      return 'url("/robert_bg_1.png")';
     }
-    return 'url("/background.jpg")'
-  }
+    return 'url("/background.jpg")';
+  };
 
   const exitGame = () => {
     actions.exitGame();
@@ -30,7 +30,11 @@ export const InGame = () => {
     >
       <div className="flex w-full max-w-5xl flex-col justify-center">
         <div className="w-full justify-end flex">
-          <img className="" src={appState.game?.type === 'SARAH' ? '/sarah.png' : '/robert.png'} alt="" />
+          <img
+            className=""
+            src={appState.game?.type === "SARAH" ? "/sarah.png" : "/robert.png"}
+            alt=""
+          />
         </div>
         <div className="flex w-full gap-4">
           <div className="flex w-full flex-col">
@@ -43,40 +47,44 @@ export const InGame = () => {
             </div>
             <div className="w-full flex flex-col max-w-5xl bg-gray-200 p-4 opacity-90 h-40">
               <div className="w-full h-full space-between">
-                {userTurn ? (
+                {appState.game?.isUserTurn ? (
                   <div>
                     <textarea
                       className="resize-none flex-1 w-full h-full"
                       maxLength={500}
                       rows={4}
+                      onChange={(e) => setCurrentMessage(e.target.value)}
                     />
                   </div>
                 ) : (
                   <div className="overflow-y-scroll flex h-full">
                     <p>
-                      reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+                      {appState.game?.lastResponse}
+                      {!appState.game?.isUserTurn && "..."}
                     </p>
                   </div>
                 )}
               </div>
               <div className="flex h-fit justify-between">
                 <button onClick={() => exitGame()}>Exit</button>
-                <button onClick={() => setUserTurn(!userTurn)}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="w-6 h-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                    />
-                  </svg>
-                </button>
+                {appState.game?.isUserTurn && currentMessage.length > 0 && (
+                  <button onClick={() => actions.respond(currentMessage)}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                      />
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
           </div>

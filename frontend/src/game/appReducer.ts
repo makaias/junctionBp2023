@@ -40,6 +40,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
         game: state.game && {
           ...state.game,
           health: Math.max(state.game.health - action.damage, 0),
+          lastTurnDamage: action.damage
         },
       };
     case "END_MESSAGE_RECEIVED":
@@ -71,6 +72,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
             role: "user",
             content: action.text,
           }],
+          lastTurnDamage: undefined
         },
       };
     case "END_GAME":

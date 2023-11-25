@@ -68,7 +68,7 @@ export const InGame = () => {
             <div className="w-full flex border-gray-700 border-b-2">
               <div className="flex w-full gap-4 bg-gradient-to-r from-[#000000E6] to-[#000000AA] p-4 justify-between rounded-t-xl">
                 <div className="flex gap-4">
-                  <p className="font-semibold">
+                  <p className="font-semibold whitespace-nowrap">
                     {appState.game?.isUserTurn && nextPressed
                       ? "You"
                       : appState.game
@@ -79,7 +79,18 @@ export const InGame = () => {
                     Rounds left: {appState.game?.turnsLeft}
                   </p>
                 </div>
-                <Progress value={appState.game?.health} />
+                <div className="w-full flex gap-2 justify-end">
+                  {appState.game?.lastTurnDamage !== undefined && (
+                    <div>{`Attitude: ${
+                      appState.game.lastTurnDamage > 0
+                        ? "+"
+                        : appState.game.lastTurnDamage < 0
+                          ? "-"
+                          : ""
+                    }${appState.game?.lastTurnDamage}`}</div>
+                  )}
+                  <Progress value={appState.game?.health} />
+                </div>
               </div>
             </div>
             <div className="w-full flex flex-col max-w-5xl bg-gradient-to-r from-[#000000E6] to-[#000000AA]  p-4 h-72 rounded-b-xl">

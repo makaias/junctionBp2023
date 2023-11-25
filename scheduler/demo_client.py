@@ -13,7 +13,7 @@ def connect():
     sio.emit("execute", {
         "messages": [],
         "details": {
-            "game": "rubberburning_robert",
+            "game": "ROBERT",
             "hp": 100
         }
     })

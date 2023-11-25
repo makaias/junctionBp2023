@@ -34,5 +34,7 @@ class Orchestrator(OrchestratorBase):
 
             # Evaluate user response
             evaluation.evaluate()
+
+            # Add message
             handler.add_message(role="assistant", content=answer)
             handler.end_message()

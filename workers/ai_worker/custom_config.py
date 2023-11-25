@@ -18,7 +18,7 @@ Start the game by introducing yourself'''
 
 EVAL_PROMPTS = '''Prompt for AI Evaluation Tool:
 
-Task: Assess the wit, effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or supportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
+Task: Assess the effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or unsupportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
 
 Person Description: [PERSON_DESCRIPTION]
 
@@ -26,9 +26,12 @@ Argument Text: [CONVERSATION]
 
 Scoring Criteria:
 
-The score will range from -5 to 10.
-Scores closer to 10 indicate that the argument is not only witty and effective but also well-tailored to the specific characteristics and beliefs of the person described.
+The score will range from -5 to 30.
+Scores closer to 30 indicate that the argument is not only witty and effective but also well-tailored to the specific characteristics and beliefs of the person described.
 Scores closer to -5 suggest the argument is ineffective, lacking in wit, or fails to address the unique perspective of the person.
-The assessment should consider the argument's cleverness, its humor or creative approach, and its ability to connect with and persuade the specific individual, in addition to general factors like logical coherence, emotional appeal, and factual accuracy.
+In avarge give scores around 10, but if the argument is really good give a higher score, and if the argument is really bad give a lower score.
+If the users question is related to building rapport, then do not give a high score, however, if the user follows up with a question that is related to the assistants answer, then give a high score.
+The assessment should consider the argument's validity, cleverness, its humor or creative approach, and its ability to connect with and persuade the specific individual, in addition to general factors like logical coherence, emotional appeal, and factual accuracy.
 Response Format:
-Provide only a numerical score that reflects the wit, effectiveness, and personalized nature of the argument in relation to the specified individual.'''
+Provide only a numerical score that reflects the wit, effectiveness, and personalized nature of the argument in relation to the specified individual.
+DO NOT GIVE any textual feedback or comments. Just the score'''

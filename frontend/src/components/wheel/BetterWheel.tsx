@@ -9,7 +9,7 @@ export const BetterWheel = (props: any) => {
   const transform = `scale(${scale}, ${scale}) translate(-${transformPercent}%, -${transformPercent}%)`
   console.log({scale, size, transform})
   return (
-    <div className="overflow-hidden" style={{ width: size, height: size }}>
+    <div className="overflow-hidden no-scrollbar" style={{ width: size, height: size }}>
       <div
         style={{
           transform: transform,

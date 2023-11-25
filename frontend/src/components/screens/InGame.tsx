@@ -7,14 +7,15 @@ export const InGame = () => {
   const actions = useAppActions();
   const appState = useAppState();
   const [currentMessage, setCurrentMessage] = useState<string>("");
+  const [nextPressed, setNextPressed] = useState<boolean>(false);
 
   const calculateBackground = () => {
     if (appState.game?.type === "ROBERT") {
       if (appState.game?.health < 33) {
-        return 'url("/robert_bg_1.png")';
+        return 'url("/robert_bg_3.png")';
       }
       if (appState.game?.health < 66) {
-        return 'url("/robert_bg_1.png")';
+        return 'url("/robert_bg_2.png")';
       }
       return 'url("/robert_bg_1.png")';
     }
@@ -59,7 +60,7 @@ export const InGame = () => {
             </div>
             <div className="w-full flex flex-col max-w-5xl bg-gray-200 p-4 opacity-90 h-40">
               <div className="w-full h-full space-between">
-                {appState.game?.isUserTurn ? (
+                {appState.game?.isUserTurn && nextPressed ? (
                   <div>
                     <textarea
                       className="resize-none flex-1 w-full h-full"
@@ -70,33 +71,53 @@ export const InGame = () => {
                   </div>
                 ) : (
                   <div className="overflow-y-scroll flex h-full">
-                    <p>
-                      {appState.game?.lastResponse}
-                      {!appState.game?.isUserTurn && "..."}
-                    </p>
+                    {appState.game?.lastResponse ? (
+                      <p>
+                        {appState.game?.lastResponse}
+                        {!appState.game?.isUserTurn && "..."}
+                      </p>
+                    ) : (
+                      <p>
+                        {
+                          appState.game?.messages[
+                            appState.game?.messages.length - 1
+                          ]?.content
+                        }
+                      </p>
+                    )}
                   </div>
                 )}
               </div>
               <div className="flex h-fit justify-between">
                 <button onClick={() => exitGame()}>Exit</button>
-                {appState.game?.isUserTurn && currentMessage.length > 0 && (
-                  <button onClick={() => actions.respond(currentMessage)}>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                {appState.game?.isUserTurn &&
+                  (currentMessage.length > 0 || !nextPressed) && (
+                    <button
+                      onClick={() => {
+                        if (nextPressed) {
+                          actions.respond(currentMessage);
+                          setCurrentMessage("");
+                          setNextPressed(false);
+                        }
+                        setNextPressed(true);
+                      }}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M8.25 4.5l7.5 7.5-7.5 7.5"
-                      />
-                    </svg>
-                  </button>
-                )}
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M8.25 4.5l7.5 7.5-7.5 7.5"
+                        />
+                      </svg>
+                    </button>
+                  )}
               </div>
             </div>
           </div>

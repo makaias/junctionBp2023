@@ -11,10 +11,10 @@ export const Progress = ({ value }: ProgressProps) => {
             !value
               ? "bg-red-200"
               : value < 33
-                ? "bg-red-200"
+                ? "bg-green-200"
                 : value < 66
                   ? "bg-yellow-200"
-                  : "bg-green-200"
+                  : "bg-red-200"
           }`}
           style={{ width: `${value ? 100 - value : 0}%` }}
         ></div>

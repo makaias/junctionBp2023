@@ -12,19 +12,18 @@ class ConsoleModelHandler(ModelHandler):
         self.__finalized = False
 
     def send_text(self, text):
-        exid = self.__execution["id"]
-        logging.info(f"Sending text {exid} {text}")
+        logging.info(f"Sending text {text}")
 
     def end_message(self):
-        exid = self.__execution["id"]
-        logging.info(f"Ending message {exid}")
+        logging.info(f"Ending message")
         self.is_finalized = True
 
     def messages(self):
         if self.__messages is None:
             logging.info("No messages found! Asking for message...")
             self.__messages = [
-                {"role": "user", "content": input("Please type an input prompt: ")}
+                {"role": "user", "content": input(
+                    "Please type an input prompt: ")}
             ]
         return self.__messages
 
@@ -32,8 +31,8 @@ class ConsoleModelHandler(ModelHandler):
         return self.__execution["request"]["details"]
 
     def send_damage(self, damage: int) -> None:
-        logging.info(f"Sending damage {damage} for execution {self.__execution['id']}")
+        logging.info(f"Sending damage {damage} for execution")
 
     def send_end_game(self):
-        logging.info(f"Sending end game for execution {self.__execution['id']}")
+        logging.info(f"Sending end game for execution ")
         self.is_finalized = True

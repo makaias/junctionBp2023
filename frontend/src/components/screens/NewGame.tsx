@@ -85,7 +85,7 @@ export const NewGame = () => {
       {modal && (
         <Modal callback={() => setModal(false)}>
           <div className="flex w-full flex-col items-center justify-start">
-            <div className="flex w-full justify-center">
+            <div className="flex w-full mb-8 justify-center">
               <h1 className="text-2xl">The challenge:</h1>
             </div>
             {!selected ? (

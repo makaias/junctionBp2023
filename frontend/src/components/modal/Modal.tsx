@@ -12,31 +12,29 @@ export const Modal = ({ children, callback }: OverlayProps) => {
       onClick={() => callback()}
     >
       <div
-        className="w-full max-w-2xl h-[80%] bg-black text-orange-500 flex flex-col gap-4 rounded-xl overflow-hidden"
+        className="w-full relative max-w-2xl h-[80%] bg-black p-4 text-orange-500 flex flex-col gap-4 rounded-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="bg-secondary-300 flex w-full p-4 justify-end">
-          <button
-            onClick={() => callback()}
-            className="p-2 bg-secondary-100 rounded-xl"
+        <button
+          onClick={() => callback()}
+          className="p-2 absolute top-4 right-4 rounded-xl"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            strokeWidth={1.5}
+            stroke="currentColor"
+            className="w-6 h-6"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
-        </div>
-        <div className="p-8 overflow-scroll">{children}</div>
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+        <div className="p-4 overflow-scroll">{children}</div>
       </div>
     </div>
   );

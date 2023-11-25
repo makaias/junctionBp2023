@@ -1,7 +1,7 @@
 export type AppState = {
-  game: GameState
+  game: GameState | null
   appState: "CONNECTING" | "CONNECTED" | "ERROR"
-  error?: string
+  error: string | null
 }
 
 export type GameState = {

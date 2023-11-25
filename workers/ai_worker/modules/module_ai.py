@@ -16,17 +16,17 @@ class AIModule(BaseModule):
         self.temperature = 0.5
 
         # Set up OpenAI API
-        if self.__modelName in openai_models:
+        if self.__modelName in OPENAI_MODELS:
             load_dotenv()
             client = OpenAI()
             self.__textGenerator = client.chat.completions.create
         
         # Set up local model:
-        elif self.__modelName in local_models:
+        elif self.__modelName in LOCAL_MODELS:
             self.context = 4096
             self.n_gpu_layers = 128
             self.__model = Llama(
-                model_path=models[modelName],
+                model_path=MODELS[modelName],
                 n_gpu_layers=self.n_gpu_layers,
                 n_ctx=self.context)
             self.__textGenerator = self.__model.create_chat_completion

@@ -23,6 +23,19 @@ export const useSocketEvent = (
   }, [io, event, handler]);
 };
 
+export const useSocketAnyEvent = (handler: (...args: any) => void) => {
+  const context = useContext(SocketContext);
+
+  if (!context) {
+    throw new Error("useSocketAnyEvent must be used within a SocketContext!");
+  }
+  const { io } = context;
+  useEffect(() => {
+    io.onAny(handler);
+    return () => void io.offAny(handler);
+  }, [io, handler]);
+}
+
 export const useSocket = () => {
   const context = useContext(SocketContext);
   if (!context)

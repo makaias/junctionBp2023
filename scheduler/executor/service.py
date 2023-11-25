@@ -24,7 +24,7 @@ class ExecutorService:
         sio = self.sio
         sio.on("connect", self.__sio_connect)
         sio.on("disconnect", self.__sio_disconnect)
-        sio.on("finalize", self.__sio_finalize)
+        sio.on("end_message", self.__sio_end_message)
         sio.on("register", self.__sio_register)
         sio.on("*", self.__sio_handle_messages)
 
@@ -97,7 +97,7 @@ class ExecutorService:
         else:
             execution.sio.emit(event, data)
 
-    def __sio_finalize(self, sid, data):
+    def __sio_end_message(self, sid, data):
         exid = data["id"]
         logging.info(f"Finalizing execution {exid}")
         executor = self.__get_executor_for_execution(exid)

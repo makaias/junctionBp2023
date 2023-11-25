@@ -1,7 +1,7 @@
 import { AppState, GameType } from "./types";
 
 export function appReducer(state: AppState, action: ReducerMessage): AppState {
-  console.log("appReducer", action, state);
+  console.log("Reducer event", action);
   switch (action.type) {
     case "GAME_CREATED":
       return {
@@ -49,7 +49,12 @@ type SocketConnectedMessage = ReducerMessageBase & {
   type: "SOCKET_CONNECTED";
 };
 
-type ReducerMessage =
+type SocketDisconnectedMessage = ReducerMessageBase & {
+  type: "SOCKET_DISCONNECTED";
+};
+
+export type ReducerMessage =
   | GameCreatedMessage
   | ExitGameMessage
-  | SocketConnectedMessage;
+  | SocketConnectedMessage
+  | SocketDisconnectedMessage;

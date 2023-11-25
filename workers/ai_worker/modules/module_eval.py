@@ -3,6 +3,7 @@ from llama_cpp import Llama
 from openai import OpenAI
 from dotenv import load_dotenv
 import copy
+import re
 
 from .module_base import BaseModule
 from ..custom_config import *
@@ -83,6 +84,9 @@ class EvalModule(BaseModule):
 
         score = ''.join(result)
         logging.info(f"Score generated: {score}")
+        # Use regeex to get first number
+        score = re.findall(r"[-+]?\d+", score)[0]
+
         self.__modelHandler.send_damage(score)
 
         return score

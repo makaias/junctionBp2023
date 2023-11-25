@@ -31,10 +31,8 @@ class ConsoleModelHandler(ModelHandler):
         return self.__execution["request"]["details"]
 
     def send_damage(self, damage: int) -> None:
-        logging.info(f"Sending damage {damage} for execution {
-                     self.__execution['id']}")
+        logging.info(f"Sending damage {damage} for execution")
 
     def send_end_game(self):
-        logging.info(f"Sending end game for execution {
-                     self.__execution['id']}")
+        logging.info(f"Sending end game for execution ")
         self.is_finalized = True

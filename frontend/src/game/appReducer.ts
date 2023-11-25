@@ -13,7 +13,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
           isUserTurn: false,
           lastResponse: "",
           messages: [],
-          turnsLeft: 10,
+          turnsLeft: 11,
         },
       };
     case "EXIT_GAME":
@@ -49,6 +49,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
           ...state.game,
           lastResponse: "",
           isUserTurn: true,
+          turnsLeft: Math.max(0, state.game.turnsLeft - 1),
           messages: [...state.game.messages, {
             role: "assistant",
             content: state.game.lastResponse,

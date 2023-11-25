@@ -8,7 +8,7 @@ export const Progress = ({ value }: ProgressProps) => {
       <div className="h-5 w-full bg-blue-200">
         <div
           className={`h-5 ${
-            !value
+            value === undefined
               ? "bg-red-200"
               : value < 33
                 ? "bg-green-200"
@@ -16,7 +16,7 @@ export const Progress = ({ value }: ProgressProps) => {
                   ? "bg-yellow-200"
                   : "bg-red-200"
           }`}
-          style={{ width: `${value ? 100 - value : 0}%` }}
+          style={{ width: `${value !== undefined ? 100 - value : 0}%` }}
         ></div>
       </div>
     </div>

@@ -14,6 +14,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
           lastResponse: "",
           messages: [],
           turnsLeft: 11,
+          lastTurnDamage: undefined
         },
       };
     case "EXIT_GAME":

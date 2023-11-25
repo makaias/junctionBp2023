@@ -12,6 +12,7 @@ export type GameState = {
   lastResponse: string
   messages: Message[]
   turnsLeft: number
+  lastTurnDamage: number | undefined
 }
 
 export type Message = {

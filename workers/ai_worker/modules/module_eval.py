@@ -92,6 +92,4 @@ class EvalModule(BaseModule):
         else:
             score = int(score_list[0])
 
-        self.__modelHandler.send_damage(score)
-
         return score

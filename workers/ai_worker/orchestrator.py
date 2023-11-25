@@ -17,24 +17,30 @@ class Orchestrator(OrchestratorBase):
             handler=handler
         )
 
-        player = completion.get_player_dict()
-        handler.add_message(role="assistant", content=player['first_message'])
-
-        while handler.game_details()["turns_remaining"] > 0:
-            # Ask for user input/message
-            handler.add_message(role="user", content=input(
-                "Type your arguments here:"))
-
-            # End for break message
-            if handler.messages()[-1]["content"] == "END":
-                break
-
-            # Send message to model
-            answer = completion.execute()
-
-            # Evaluate user response
-            evaluation.evaluate()
-
-            # Add message
-            handler.add_message(role="assistant", content=answer)
+        if len(handler.messages()) == 0:
+            player = completion.get_player_dict()
+            handler.send_text(player['first_message'])
             handler.end_message()
+            return
+
+        if handler.game_details()["hp"] <= 0:
+            handler.send_text("Congratulations! You won!")
+            handler.send_end_game()
+            handler.end_message()
+            return
+
+        if handler.game_details()["turns_remaining"] <= 0:
+            handler.send_text("You ran out of turns!")
+            handler.send_end_game()
+            handler.end_message()
+            return
+
+        # Send message to model
+        answer = completion.execute()
+
+        # Evaluate user response
+        score = evaluation.evaluate()
+        handler.send_damage(score)
+
+        # Add message
+        handler.end_message()

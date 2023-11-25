@@ -34,9 +34,8 @@ class ConsoleModelHandler(ModelHandler):
         logging.info(f"Sending end game for execution ")
         self.is_finalized = True
 
-    def add_message(self):
+    def add_message(self, role: str = "user", content: str = ""):
         logging.info("Asking for message")
         self.__messages.append(
-            {"role": "user", "content": input(
-                "Type your message here: ")}
+            {"role": role, "content": content}
         )

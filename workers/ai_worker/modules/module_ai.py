@@ -17,10 +17,6 @@ class AIModule(BaseModule):
         self.temperature = 0
         self.__modelHandler = handler
 
-        # Insert system prompt at beginnging of messages
-        messages = handler.messages()
-        messages.insert(0, self.setup_system_prompt())
-
         # Set up OpenAI API
         if self.__modelName in OPENAI_MODELS:
             load_dotenv()
@@ -41,28 +37,48 @@ class AIModule(BaseModule):
             raise ValueError(
                 f"Model name {self.__modelName} is not supported yet.")
 
-    def execute(self):
+    def execute(self, skip_system_prompt=False):
+        if not skip_system_prompt:
+            # Insert system prompt at beginnging of messages
+            messages = self.__modelHandler.messages()
+            messages.insert(0, self.setup_system_prompt())
+
         # Send messages to model
+        messages = self.__modelHandler.messages()
         responseStream = self.__textGenerator(
-            self.__modelHandler.messages(),
+            model=self.__modelName,
+            messages=messages,
             stream=self.stream,
             temperature=self.temperature
         )
 
         # Stream response
         result = []
-        for output in responseStream:
-            if output["choices"][0]["finish_reason"] is None:
-                try:
-                    word = output["choices"][0]["delta"]["content"]
-                    self.__modelHandler.send_text(word)
-                    result.append(word)
+        if self.__modelName in LOCAL_MODELS:
+            for output in responseStream:
+                if output["choices"][0]["finish_reason"] is None:
+                    try:
+                        word = output["choices"][0]["delta"]["content"]
+                        self.__modelHandler.send_text(word)
+                        result.append(word)
 
-                except KeyError as e:
-                    logging.info(
-                        f"Key Error encountered for model output stream {e}")
+                    except KeyError as e:
+                        logging.info(
+                            f"Key Error encountered for model output stream {e}")
+
+        else:
+            for output in responseStream:
+                if output.choices[0].finish_reason is None:
+                    try:
+                        word = output.choices[0].delta.content
+                        self.__modelHandler.send_text(word)
+                        result.append(word)
+
+                    except KeyError as e:
+                        logging.info(
+                            f"Key Error encountered for model output stream {e}")
 
         logging.info(f"Character response generated: {''.join(result)}")
         self.__modelHandler.end_message()
 
-        return result
+        return ''.join(result)

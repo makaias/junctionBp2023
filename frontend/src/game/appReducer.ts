@@ -13,7 +13,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
           isUserTurn: false,
           lastResponse: "",
           messages: [],
-          turnNumber: 1,
+          turnsLeft: 10,
         },
       };
     case "EXIT_GAME":

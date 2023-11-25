@@ -58,7 +58,7 @@ export function AppBackend(props: { children: React.ReactNode }) {
           details: {
             game_type: appState.game.type,
             hp: appState.game.health,
-            turns_remaining: appState.game.turnNumber, //TODO calculate this
+            turns_remaining: appState.game.turnsLeft,
           },
         });  
       },

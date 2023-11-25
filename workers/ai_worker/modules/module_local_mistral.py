@@ -1,7 +1,7 @@
 from .module_base import BaseModule
 import logging
 from llama_cpp import Llama
-from ..custom_config import models as cfg_models
+from ..custom_config import MODELS as cfg_models
 
 PROMPT = [
     {"role": "system", "content": "You are a poetic assistant, skilled in explaining complex programming concepts with creative flair."}

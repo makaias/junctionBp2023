@@ -1,6 +1,10 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { AppActions, AppState, GameType } from "./types";
-import { useSocket } from "../hooks/useSocket";
+import {
+  useSocket,
+  useSocketEvent as useSocketEventBase,
+} from "../hooks/useSocket";
+import { appReducer } from "./appReducer";
 
 type AppBackend = {
   appState: AppState;
@@ -12,31 +16,6 @@ const initialState: AppState = {
   appState: "CONNECTING",
   error: null,
 };
-
-function appReducer(state: AppState, action: ReducerMessage): AppState {
-  switch (action.type) {
-    case "GAME_CREATED":
-      return {
-        ...state,
-        game: {
-          type: action.gameType,
-          gameState: "PLAYING",
-          health: 100,
-          isUserTurn: false,
-          lastResponse: "",
-          messages: [],
-          turnNumber: 1,
-        },
-      };
-    case "EXIT_GAME":
-      return {
-        ...state,
-        game: null,
-      };
-    default:
-      return state;
-  }
-}
 
 const AppBackendContext = React.createContext<AppBackend | null>(null);
 export function useAppContext() {
@@ -50,6 +29,18 @@ export function useAppContext() {
 export function AppBackend(props: { children: React.ReactNode }) {
   const socket = useSocket();
   const [appState, dispatch] = React.useReducer(appReducer, initialState);
+
+  useSocketEvent("*", (event: any, data: any) => {
+    console.log("SOCKET EVENT", event, data);
+  }, [])
+
+  useSocketEvent(
+    "connect",
+    () => {
+      dispatch({ type: "SOCKET_CONNECTED" });
+    },
+    [dispatch],
+  );
 
   const actions: AppActions = useMemo(
     () => ({
@@ -77,6 +68,10 @@ export function AppBackend(props: { children: React.ReactNode }) {
     actions,
   };
 
+  useEffect(() => {
+    console.log("App state changed", appState);
+    }, [appState]);
+
   return (
     <AppBackendContext.Provider value={ctx}>
       {props.children}
@@ -84,17 +79,10 @@ export function AppBackend(props: { children: React.ReactNode }) {
   );
 }
 
-type ReducerMessageBase = {
-  type: string;
-};
-
-type GameCreatedMessage = ReducerMessageBase & {
-  type: "GAME_CREATED";
-  gameType: GameType;
-};
-
-type ExitGameMessage = ReducerMessageBase & {
-  type: "EXIT_GAME";
-};
-
-type ReducerMessage = GameCreatedMessage | ExitGameMessage;
+function useSocketEvent(
+  event: string,
+  callback: (...data: any[]) => void,
+  deps: any[],
+) {
+  useSocketEventBase(event, useCallback(callback, deps));
+}

@@ -5,7 +5,7 @@ from .modules.module_eval import EvalModule
 
 class Orchestrator(OrchestratorBase):
     def __init__(self):
-        super().__init__()
+        super().__init__(parallelism=5)
 
     def execute(self, handler):
         completion = AIModule(

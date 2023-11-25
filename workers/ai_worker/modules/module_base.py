@@ -1,6 +1,5 @@
 from ..custom_config import *
 
-
 class BaseModule:
     def __init__(self, handler: any):
         self.__modelHandler = handler
@@ -8,7 +7,7 @@ class BaseModule:
     def execute(self):
         pass
 
-# "details": {"game_type": "ROBERT","hp": 100}
+# Set up system prompt for each agent
     def setup_eval_prompt(self):
         player_dict = self.get_player_dict()
 

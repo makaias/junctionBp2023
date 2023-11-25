@@ -3,20 +3,22 @@ from llama_cpp import Llama
 from openai import OpenAI
 from dotenv import load_dotenv
 import copy
+import re
 
 from .module_base import BaseModule
 from ..custom_config import *
 
 
-class AIModule(BaseModule):
+class EvalModule(BaseModule):
     def __init__(self,
                  modelName: str,
                  handler: any):
         super().__init__(handler)
         self.__modelName = modelName
         self.stream = True
-        self.temperature = 0.2
+        self.temperature = 0.75
         self.__modelHandler = handler
+        self.__maxTokens = 5
 
         # Set up OpenAI API
         if self.__modelName in OPENAI_MODELS:
@@ -38,20 +40,22 @@ class AIModule(BaseModule):
             raise ValueError(
                 f"Model name {self.__modelName} is not supported yet.")
 
-    def execute(self, skip_system_prompt=False):
+    def evaluate(self, skip_system_prompt=False):
         if not skip_system_prompt:
             # Insert system prompt at beginnging of messages
             messages = copy.deepcopy(self.__modelHandler.messages())
-            messages.insert(0, self.setup_system_prompt())
+            messages.insert(0, self.setup_eval_prompt())
 
         else:
             messages = self.__modelHandler.messages()
 
+        # Send messages to model4
         responseStream = self.__textGenerator(
             model=self.__modelName,
             messages=messages,
             stream=self.stream,
-            temperature=self.temperature
+            temperature=self.temperature,
+            max_tokens=self.__maxTokens
         )
 
         # Stream response
@@ -61,7 +65,6 @@ class AIModule(BaseModule):
                 if output["choices"][0]["finish_reason"] is None:
                     try:
                         word = output["choices"][0]["delta"]["content"]
-                        self.__modelHandler.send_text(word)
                         result.append(word)
 
                     except KeyError as e:
@@ -73,13 +76,17 @@ class AIModule(BaseModule):
                 if output.choices[0].finish_reason is None:
                     try:
                         word = output.choices[0].delta.content
-                        self.__modelHandler.send_text(word)
                         result.append(word)
 
                     except KeyError as e:
                         logging.info(
                             f"Key Error encountered for model output stream {e}")
 
-        logging.info(f"Character response generated: {''.join(result)}")
+        score = ''.join(result)
+        logging.info(f"Score generated: {score}")
+        # Use regeex to get first number
+        score = re.findall(r"[-+]?\d+", score)[0]
 
-        return ''.join(result)
+        self.__modelHandler.send_damage(score)
+
+        return score

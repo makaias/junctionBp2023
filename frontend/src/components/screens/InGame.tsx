@@ -90,7 +90,7 @@ export const InGame = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex flex-1 flex-col min-h-[32px] max-h-52">
+          <div className="w-full overflow-y-auto flex flex-1 flex-col min-h-[32px] max-h-52">
             <div className="w-full flex-1 space-between">
               {appState.game?.isUserTurn && nextPressed ? (
                 <div className="p-4 pb-0">

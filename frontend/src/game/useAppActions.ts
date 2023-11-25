@@ -1,9 +1,7 @@
-import {AppActions, GameType} from "./types"
+import { useAppContext } from "./AppBackend";
+import { AppActions } from "./types";
 
 export function useAppActions(): AppActions {
-  return {
-    stargGame: () => {},
-    exitGame: void,
-    respond: void,
-  }
+  const { actions } = useAppContext();
+  return actions;
 }

@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import { AppActions, AppState, GameType } from "./types";
 import { useSocket } from "../hooks/useSocket";
 

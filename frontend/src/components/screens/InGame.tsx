@@ -55,7 +55,7 @@ export const InGame = () => {
         boxSizing: "border-box",
       }}
     >
-      <div className="flex w-full max-w-5xl flex-col justify-center">
+      <div className="flex w-full h-full max-w-5xl flex-col justify-end items-stretch">
         <div className="w-full flex-1 justify-end flex max-h-[45vh]">
           <img
             className=""
@@ -64,9 +64,9 @@ export const InGame = () => {
           />
         </div>
         {/* <!-- Bottom panel --> */}
-        <div className="flex flex-1 w-full flex-col  max-h-[45vh] bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] backdrop-blur-sm rounded-xl">
+        <div className="flex flex-1 w-full flex-col  max-h-72  bg-gradient-to-r from-[#000000aa] via-[#000000] to-[#000000aa] backdrop-blur-sm rounded-xl">
           <div className="w-full flex border-gray-700 border-b-2 p-4">
-            <div className="flex w-full gap-4  justify-between">
+            <div className="flex flex-col md:flex-row w-full gap-4  justify-between ">
               <div className="flex gap-4">
                 <p className="font-semibold whitespace-nowrap">
                   {appState.game?.isUserTurn && nextPressed

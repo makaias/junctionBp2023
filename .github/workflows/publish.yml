@@ -1,0 +1,38 @@
+name: Release
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+      contents: write
+      pull-requests: read
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      - name: Log in to Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: nexus.thor.akromentos.com
+          username: ${{ secrets.NEXUS_USERNAME }}
+          password: ${{ secrets.NEXUS_PASSWORD }}
+
+      - name: Build and push frontend image
+        run: |
+          DOCKER_TAG=$(echo ${{ github.ref }} | sed 's/^refs\/tags\/v//')
+          DOCKER_IMAGE=nexus.thor.akromentos.com/junctionbp2023-frontend:$DOCKER_TAG
+          docker build -t $DOCKER_IMAGE frontend
+          docker push $DOCKER_IMAGE
+
+      - name: Build and push scheduler image
+        run: |
+          DOCKER_TAG=$(echo ${{ github.ref }} | sed 's/^refs\/tags\/v//')
+          DOCKER_IMAGE=nexus.thor.akromentos.com/junctionbp2023-scheduler:$DOCKER_TAG
+          docker build -t $DOCKER_IMAGE scheduler
+          docker push $DOCKER_IMAGE

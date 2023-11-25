@@ -1,5 +1,6 @@
 from worker_base.orchestrator_base import OrchestratorBase
 from .modules.module_ai import AIModule
+from .modules.module_eval import EvalModule
 
 
 class Orchestrator(OrchestratorBase):
@@ -10,6 +11,11 @@ class Orchestrator(OrchestratorBase):
         completion = AIModule(
             modelName="mistral-7B-instruct",
             handler=handler)
+
+        evaluation = EvalModule(
+            modelName="mistral-7B-instruct",
+            handler=handler
+        )
 
         content = completion.execute()
 
@@ -28,3 +34,7 @@ class Orchestrator(OrchestratorBase):
 
             # Send message to model
             completion.execute(skip_system_prompt=True)
+
+            # Evaluate user response
+            evaluation.evaluate()
+            handler.end_message()

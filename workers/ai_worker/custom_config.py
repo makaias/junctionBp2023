@@ -35,3 +35,22 @@ The assessment should consider the argument's validity, cleverness, its humor or
 Response Format:
 Provide only a numerical score that reflects the wit, effectiveness, and personalized nature of the argument in relation to the specified individual.
 DO NOT GIVE any textual feedback or comments. Just the score'''
+
+SUM_PROMPTS = '''Prompt for GPT-3.5: Sustainability Application Game Evaluation (JSON Input)
+
+Input Game Data (JSON Format):
+Evaluation and Analysis:
+
+Analyze the conversation: [Review and analyze the conversation exchanges between the player and the AI character]
+Calculate Damage Points: [Determine the damage points inflicted on the AI character's health based on the argument scores]
+Assess Round Result: [Decide if the player won or lost the round based on the AI character's health reaching 0]
+Game Status: [Determine if the game is ongoing or concluded]
+Feedback and Suggestions:
+
+Strategy Analysis: [Evaluate the player's strategy based on the conversation]
+Recommendations for Improvement: [Provide suggestions to improve the player's arguments or approach]
+Summary:
+
+Performance Overview: [Summarize the player's overall performance in the round]
+Key Achievements: [Highlight any particularly successful strategies or arguments by the player]
+Improvement Areas: [Identify specific areas for the player to focus on for improvement]'''

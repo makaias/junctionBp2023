@@ -139,7 +139,8 @@ export const InGame = () => {
             <div className="flex gap-4">
               {appState.game?.messages.length > 0 &&
                 appState.game?.messages[appState.game.messages.length - 1]
-                  .role === "assistant" && nextPressed && (
+                  .role === "assistant" &&
+                nextPressed && (
                   <button
                     onClick={() => {
                       setNextPressed(false);
@@ -161,7 +162,7 @@ export const InGame = () => {
                         />
                       </svg>
 
-                      <span>Back</span>
+                      <span>View Response</span>
                     </div>
                   </button>
                 )}

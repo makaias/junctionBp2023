@@ -28,7 +28,8 @@ class ConsoleModelHandler(ModelHandler):
         return self.__messages
 
     def game_details(self) -> dict:
-        return self.__execution["request"]["details"]
+        # return self.__execution["request"]["details"]
+        return {"game_type": "ROBERT", "hp": 100}
 
     def send_damage(self, damage: int) -> None:
         logging.info(f"Sending damage {damage} for execution")

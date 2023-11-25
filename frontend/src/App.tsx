@@ -1,18 +1,29 @@
 import { useSocketEvent } from "./hooks/useSocket";
+import { InGame } from "./components/screens/InGame";
+import useAppState from "./game/useAppState";
+import { EndGame } from "./components/screens/EndGame";
+import { NewGame } from "./components/screens/NewGame";
+import { Spinner } from "./components/spinner/Spinner";
 
 function App() {
-  // const io = useSocket()
-  useSocketEvent("connect", () => console.log("REEEEEEE"));
-  // const messageHandler = () => {
-  //   console.log('Do stuff here :)')
-  //   io.emit('execute', { messages: null})
-  // }
+  const appState = useAppState();
 
-  return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
-  );
+  useSocketEvent("connect", () => console.log("REEEEEEE"));
+
+  switch (appState.appState) {
+    case "CONNECTING":
+      return <Spinner message="Waiting for server..."/>;
+    case "CONNECTED":
+      if (!appState.game) return <NewGame />;
+      switch (appState.game.gameState) {
+        case "PLAYING":
+          return <InGame />;
+        default:
+          return <EndGame />;
+      }
+    case "ERROR":
+      return <div>error</div>;
+  }
 }
 
 export default App;

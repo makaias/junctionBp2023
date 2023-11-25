@@ -1,8 +1,9 @@
 OPENAI_MODELS = ["gpt-3.5-turbo"]
-LOCAL_MODELS = ["mistral-7B-instruct"]
+LOCAL_MODELS = ["mistral-7B-instruct", "openchat-3.5"]
 
 MODELS = {
     "mistral-7B-instruct": "../models/7B/mistral-7b-instruct-v0.1.Q4_K_M.gguf",
+    "openchat-3.5": "../models/7B/openchat_3.5.Q4_K_M.gguf"
 }
 
 CHARACTERS = [{'name': 'ROBERT', 'role': 'system', 'desc': '''You have to play the role of Bob who likes to burn tires as his favourite past time activity. He doesn't care much about sustainability, but really loves birds.'''},

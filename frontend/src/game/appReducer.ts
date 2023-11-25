@@ -13,7 +13,7 @@ export function appReducer(state: AppState, action: ReducerMessage): AppState {
           isUserTurn: false,
           lastResponse: "",
           messages: [],
-          turnsLeft: 2,
+          turnsLeft: 11,
           lastTurnDamage: undefined
         },
       };

@@ -39,7 +39,7 @@ export const NewGame = () => {
       </button>
       <div className="flex flex-col justify-center bg-gradient-to-r from-[#000000E6] to-[#000000CC] text-orange-500 rounded-xl p-4">
         <h1 className="p-4 mb-10 text-3xl font-bold">
-          Let's make the world a better place!
+          GreenHeart Chronicles
         </h1>
         <button
           onClick={() => setModal(true)}

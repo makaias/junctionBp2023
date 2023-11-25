@@ -1,3 +1,5 @@
+import { AppState } from "./AppState";
+
 export dedfault function useAppState() : AppState  {
   return {
     game: {

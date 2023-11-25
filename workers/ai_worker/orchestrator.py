@@ -12,7 +12,10 @@ class Orchestrator(OrchestratorBase):
             handler=handler)
 
         content = completion.execute()
-        handler.add_message(role="assistant", content=content)
+
+        player = completion.get_player_dict()
+
+        handler.add_message(role="assistant", content=player['first_message'])
 
         while handler.game_details()["turns_remaining"] > 0:
             # Ask for user input/message

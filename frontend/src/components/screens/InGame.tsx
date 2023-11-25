@@ -116,7 +116,7 @@ export const InGame = () => {
                   />
                 </div>
               ) : (
-                <div className="overflow-y-scroll flex flex-1 max-h-52 p-4">
+                <div className="overflow-y-auto flex flex-1 max-h-52 p-4">
                   {appState.game?.lastResponse ? (
                     <p>
                       {appState.game?.lastResponse}

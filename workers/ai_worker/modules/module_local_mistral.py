@@ -37,7 +37,7 @@ class LocalAIModule(BaseModule):
 
         # Generate response
         responseStream = self.__model.create_chat_completion(
-            messages,
+            PROMPT,
             max_tokens=1024,
             stream=self.stream,
             temperature=self.temperature,

@@ -5,7 +5,7 @@ export type AppState = {
 }
 
 export type GameState = {
-  type: "ROBERT" | "SARAH"
+  type: GameType
   isUserTurn: boolean
   gameState: "WON" | "LOST" | "PLAYING"
   health: number
@@ -17,4 +17,12 @@ export type GameState = {
 export type Message = {
   role: "user" | "assistant",
   content: string
+}
+
+export type GameType = "ROBERT" | "SARAH"
+
+export type AppActions = {
+  startGame: (type: GameType) => void
+  exitGame: () => void
+  respond: (message: string) => void
 }

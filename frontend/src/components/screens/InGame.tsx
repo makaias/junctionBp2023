@@ -99,6 +99,7 @@ export const InGame = () => {
                     className="resize-none flex-1 w-full h-full bg-gray-700"
                     maxLength={500}
                     rows={4}
+                    value={currentMessage}
                     onChange={(e) => setCurrentMessage(e.target.value)}
                     placeholder="Give us your best arguments..."
                     onKeyDown={(e) => {
@@ -135,7 +136,37 @@ export const InGame = () => {
             </div>
           </div>
           <div className="flex h-fit justify-between p-4">
-            <button onClick={() => exitGame()}>Exit</button>
+            <div className="flex gap-4">
+              {appState.game?.messages.length > 0 &&
+                appState.game?.messages[appState.game.messages.length - 1]
+                  .role === "assistant" && nextPressed && (
+                  <button
+                    onClick={() => {
+                      setNextPressed(false);
+                    }}
+                  >
+                    <div className="flex gap-2 items-center">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M15.75 19.5L8.25 12l7.5-7.5"
+                        />
+                      </svg>
+
+                      <span>Back</span>
+                    </div>
+                  </button>
+                )}
+              <button onClick={() => exitGame()}>Exit</button>
+            </div>
             {appState.game?.isUserTurn &&
               (currentMessage.length > 0 || !nextPressed) && (
                 <button

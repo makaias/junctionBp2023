@@ -1,5 +1,6 @@
 from ..custom_config import *
 
+
 class BaseModule:
     def __init__(self, handler: any):
         self.__modelHandler = handler
@@ -13,9 +14,6 @@ class BaseModule:
 
         eval_prompt = EVAL_PROMPTS.replace(
             '[PERSON_DESCRIPTION]', player_dict['desc'])
-
-        eval_prompt = eval_prompt.replace(
-            '[CONVERSATION]', str(self.__modelHandler.messages()))
 
         return {'role': 'system', 'content': eval_prompt}
 

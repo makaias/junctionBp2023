@@ -20,7 +20,7 @@ module_name = sys.argv[1] if len(sys.argv) > 1 else "demo_worker.orchestrator"
 bff_url = (
     sys.argv[2]
     if len(sys.argv) > 2
-    else os.environ["SCHEDULER_URL"]
+    else os.environ.get("SCHEDULER_URL", "http://localhost:5001")
 )
 
 module_import = __import__(module_name, fromlist=["Orchestrator"])
@@ -51,6 +51,7 @@ def execute(data):
 @sio.event
 def connect():
     logging.info("Connected to executor service")
+    sio.emit("register", {"type": module_name, "parallelism": orchestrator.parallelism})
 
 
 @sio.on("*")

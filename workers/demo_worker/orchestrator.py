@@ -11,14 +11,14 @@ ultricies nunc, quis aliqua
 class Orchestrator(OrchestratorBase):
     def __init__(self):
         super().__init__(
-            parallelism=2
+            parallelism=1
         )
 
     def execute(self, handler):
         tokens = DEMO_TEXT.split(" ")
 
         for token in tokens:
-            handler.send_text(token)
-            time.sleep(0.1)
+            handler.send_text(token + " ")
+            time.sleep(1)
 
         handler.finalize()

@@ -10,9 +10,21 @@ export const InGame = () => {
 
   const calculateBackground = () => {
     if (appState.game?.type === "ROBERT") {
+      if (appState.game?.health < 33) {
+        return 'url("/robert_bg_1.png")';
+      }
+      if (appState.game?.health < 66) {
+        return 'url("/robert_bg_1.png")';
+      }
       return 'url("/robert_bg_1.png")';
     }
-    return 'url("/background.jpg")';
+    if (appState.game?.health && appState.game.health < 33) {
+      return 'url("/sarah_bg_3.png")';
+    }
+    if (appState.game?.health && appState.game.health < 66) {
+      return 'url("/sarah_bg_2.png")';
+    }
+    return 'url("/sarah_bg_1.png")';
   };
 
   const exitGame = () => {
@@ -42,7 +54,7 @@ export const InGame = () => {
               <div className="flex w-full gap-4 bg-gray-200 p-4 opacity-90">
                 <p>Name</p>
                 <p className="whitespace-nowrap">Rounds left: 8</p>
-                <Progress />
+                <Progress value={appState.game?.health} />
               </div>
             </div>
             <div className="w-full flex flex-col max-w-5xl bg-gray-200 p-4 opacity-90 h-40">

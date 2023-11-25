@@ -137,7 +137,7 @@ export const InGame = () => {
           </div>
           <div className="flex h-fit justify-between p-4">
             <div className="flex gap-4">
-              {appState.game?.messages.length > 0 &&
+              {(appState.game?.messages.length ?? 0) > 0 &&
                 appState.game?.messages[appState.game.messages.length - 1]
                   .role === "assistant" &&
                 nextPressed && (

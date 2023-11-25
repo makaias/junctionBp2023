@@ -36,12 +36,12 @@ class Orchestrator(OrchestratorBase):
             handler.end_message()
             return
 
-        # Send message to model
-        answer = completion.execute()
-
-        # Evaluate user response
+        # Evaluate system response
         score = evaluation.evaluate()
         handler.send_damage(score)
+
+        # Send message to model
+        answer = completion.execute(score=score)
 
         # Answer done
         handler.end_message()

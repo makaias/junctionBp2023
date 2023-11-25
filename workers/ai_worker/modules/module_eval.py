@@ -18,7 +18,7 @@ class EvalModule(BaseModule):
         self.stream = True
         self.temperature = 0.75
         self.__modelHandler = handler
-        self.__maxTokens = 5
+        self.__maxTokens = 20
 
         # Set up OpenAI API
         if self.__modelName in OPENAI_MODELS:
@@ -49,7 +49,8 @@ class EvalModule(BaseModule):
         else:
             messages = self.__modelHandler.messages()
 
-        # Send messages to model4
+        # Send messages to model
+        logging.info(f"Sending messages to model: {messages}")
         responseStream = self.__textGenerator(
             model=self.__modelName,
             messages=messages,

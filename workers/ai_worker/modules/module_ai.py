@@ -15,7 +15,7 @@ class AIModule(BaseModule):
         super().__init__(handler)
         self.__modelName = modelName
         self.stream = True
-        self.temperature = 0
+        self.temperature = 0.2
         self.__modelHandler = handler
 
         # Set up OpenAI API

@@ -9,11 +9,11 @@ class Orchestrator(OrchestratorBase):
 
     def execute(self, handler):
         completion = AIModule(
-            modelName="mistral-7B-instruct",
+            modelName="gpt-3.5-turbo",
             handler=handler)
 
         evaluation = EvalModule(
-            modelName="mistral-7B-instruct",
+            modelName="gpt-3.5-turbo",
             handler=handler
         )
 
@@ -30,8 +30,9 @@ class Orchestrator(OrchestratorBase):
                 break
 
             # Send message to model
-            completion.execute()
+            answer = completion.execute()
 
             # Evaluate user response
             evaluation.evaluate()
+            handler.add_message(role="assistant", content=answer)
             handler.end_message()

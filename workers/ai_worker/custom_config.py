@@ -2,17 +2,17 @@ models = {
     "mistral-7B-instruct": "../models/7B/mistral-7b-instruct-v0.1.Q4_K_M.gguf",
 }
 
-characters = [{'name': 'ROBERT', 'role': 'system', 'desc': '''You have to play the role of Bob who likes to burn tires as his favourite past time activity. He doesn't care much about sustainability, but really loves birds.'''},
+CHARACTERS = [{'name': 'ROBERT', 'role': 'system', 'desc': '''You have to play the role of Bob who likes to burn tires as his favourite past time activity. He doesn't care much about sustainability, but really loves birds.'''},
               {'name': 'SARAH', 'role': 'system', 'desc': '''You are Sarah a nefarious polluter, who is too lazy and despises other people to properly dispose your waste. You are also a famous collector of unique cups.'''}]
 
-context = f'''I would like you to act as a game master for my game. The goal of the game is to teach players about sustainability and improve their debating skills.
+CONTEXT = f'''I would like you to act as a game master for my game. The goal of the game is to teach players about sustainability and improve their debating skills.
 You have to act as the following persona: [character]
 
 You have to play hard-to get, so don't let yourself convinced the first couple times, but over time let yourself be convinved to be sustainable.
 
 Start the game by introducing yourself'''
 
-eval_prompt = '''Prompt for AI Evaluation Tool:
+EVAL_PROMPTS = '''Prompt for AI Evaluation Tool:
 
 Task: Assess the wit, effectiveness, and personalized approach of the provided argument in persuading the designated individual, who is indifferent or supportive of environmental pollution, to reconsider their stance and adopt more environmentally friendly behaviors.
 

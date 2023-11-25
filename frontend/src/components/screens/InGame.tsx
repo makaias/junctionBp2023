@@ -177,7 +177,11 @@ export const InGame = () => {
                       setCurrentMessage("");
                       setNextPressed(false);
                     } else {
-                      if (appState.game && appState.game.health <= 0) {
+                      if (
+                        appState.game &&
+                        (appState.game.health <= 0 ||
+                          appState.game.turnsLeft <= 0)
+                      ) {
                         actions.respond("");
                       } else {
                         setNextPressed(true);

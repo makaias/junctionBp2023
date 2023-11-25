@@ -72,7 +72,7 @@ export const NewGame = () => {
               you receive a score from -5 to 30.
             </p>
             <p>
-              When you reach 100 scores, you immediately win the game. If you
+              When you reach 100 score, you immediately win the game. If you
               fail to reach it in 10 turns you lose.
             </p>
             <p>

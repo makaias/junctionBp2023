@@ -98,8 +98,13 @@ export const InGame = () => {
                           actions.respond(currentMessage);
                           setCurrentMessage("");
                           setNextPressed(false);
+                        } else {
+                          if (appState.game && appState.game.health <= 0) {
+                            actions.respond("");
+                          } else {
+                            setNextPressed(true);
+                          }
                         }
-                        setNextPressed(true);
                       }}
                     >
                       <svg
